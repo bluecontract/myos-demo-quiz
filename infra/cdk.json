@@ -1,0 +1,10 @@
+{
+  "app": "npx ts-node --project tsconfig.json bin/myos-quiz.ts",
+  "context": {
+    "@aws-cdk/core:stackSynthesizer": "DefaultStackSynthesizer",
+    "@aws-cdk/core:newStyleStackSynthesis": true,
+    "@aws-cdk/aws-apigatewayv2:authorizerPayloadFormatVersion": "2.0",
+    "@aws-cdk/aws-lambda-nodejs:useArbitraryCodeHash": true,
+    "@aws-cdk/core:requireApproval": "never"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@myos-quiz/test",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'No build step for tests'",
+    "test": "vitest run",
+    "lint": "eslint \"**/*.ts\""
+  },
+  "dependencies": {
+    "@myos-quiz/ai-openai": "workspace:*",
+    "@myos-quiz/core": "workspace:*",
+    "@myos-quiz/myos-http": "workspace:*",
+    "@myos-quiz/persistence-ddb": "workspace:*",
+    "@myos-quiz/webhook": "workspace:*",
+    "@aws-sdk/client-dynamodb": "^3.609.0",
+    "@aws-sdk/client-secrets-manager": "^3.609.0",
+    "@aws-sdk/lib-dynamodb": "^3.609.0"
+  }
+}

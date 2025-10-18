@@ -1,0 +1,31 @@
+# Node
+node_modules/
+.pnpm-store/
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
+
+# Build outputs
+**/dist/
+**/cdk.out/
+/tmp/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+.envrc
+
+# Logs
+*.log
+
+# IDE/editor
+.idea/
+.vscode/
+.DS_Store
+
+# Coverage
+coverage/
+
+# Misc
+*.local

@@ -1,0 +1,23 @@
+{
+  "name": "@myos-quiz/infra",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "cdk:bootstrap": "cdk bootstrap",
+    "cdk:deploy": "cdk deploy",
+    "build": "tsc -p tsconfig.json",
+    "test": "echo 'No infra tests'",
+    "lint": "eslint \"**/*.ts\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.146.0",
+    "constructs": "^10.3.0",
+    "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3",
+    "aws-cdk": "^2.146.0"
+  }
+}

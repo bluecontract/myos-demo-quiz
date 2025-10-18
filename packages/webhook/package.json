@@ -1,0 +1,31 @@
+{
+  "name": "@myos-quiz/webhook",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/handler.js",
+  "types": "dist/handler.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^2.14.0",
+    "@aws-lambda-powertools/metrics": "^2.14.0",
+    "@aws-lambda-powertools/tracer": "^2.14.0",
+    "@aws-sdk/client-secrets-manager": "^3.609.0",
+    "@blue-labs/language": "^1.35.1",
+    "@blue-repository/core-dev": "^0.19.0",
+    "@blue-repository/myos-dev": "^0.27.0",
+    "@myos-quiz/ai-openai": "workspace:*",
+    "@myos-quiz/core": "workspace:*",
+    "@myos-quiz/myos-http": "workspace:*",
+    "@myos-quiz/persistence-ddb": "workspace:*",
+    "aws-lambda": "^1.0.7",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.130"
+  }
+}
