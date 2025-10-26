@@ -44,9 +44,7 @@ export async function loadConfig(options: { forceRefresh?: boolean } = {}): Prom
   const logLevel = process.env.LOG_LEVEL ?? 'INFO';
   const openAiModel = process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
   const myosBaseUrl = requiredEnv('MYOS_BASE_URL');
-  const jwksUrl =
-    process.env.MYOS_WEBHOOK_JWKS_URL ??
-    'https://assets.api.myos.blue/.well-known/jwks.json';
+  const jwksUrl = requiredEnv('MYOS_WEBHOOK_JWKS_URL');
   const toleranceSeconds =
     parseOptionalInt(process.env.MYOS_WEBHOOK_TOLERANCE_SEC) ?? 5 * 60;
   const replayTtlSeconds =

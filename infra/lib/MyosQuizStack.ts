@@ -59,12 +59,12 @@ export class MyosQuizStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY
     });
 
-    const myosBaseUrl = this.node.tryGetContext('myosBaseUrl') ?? 'https://api.myos.blue';
+    const myosBaseUrl = this.node.tryGetContext('myosBaseUrl') ?? stage === 'prod' ? 'https://api.myos.blue' : 'https://api.dev.myos.blue';
     const openAiModel = this.node.tryGetContext('openAiModel') ?? 'gpt-4o-mini';
 
     const myosWebhookJwksUrl =
       this.node.tryGetContext('myosWebhookJwksUrl') ??
-      'https://assets.api.myos.blue/.well-known/jwks.json';
+      stage === 'prod' ? 'https://assets.api.myos.blue/.well-known/jwks.json' : 'https://assets.api.dev.myos.blue/.well-known/jwks.json';
     const myosWebhookToleranceSec =
       this.node.tryGetContext('myosWebhookToleranceSec') ?? '300';
     const myosWebhookReplayTtlSec =

@@ -236,7 +236,7 @@ CONTROL_TABLE_NAME=<if you enabled control table>
 MAX_OPENAI_CALLS_PER_HOUR=60
 MOCK_OPENAI=false
 TIMELINE_GUARD_TTL_HOURS=48
-MYOS_WEBHOOK_JWKS_URL=https://api.myos.blue/.well-known/jwks.json
+MYOS_WEBHOOK_JWKS_URL=https://assets.api.dev.myos.blue/.well-known/jwks.json
 MYOS_WEBHOOK_TOLERANCE_SEC=300
 MYOS_WEBHOOK_REPLAY_TTL_SEC=86400
 LOG_LEVEL=INFO
@@ -250,7 +250,7 @@ The webhook handler enforces [RFC 9530 `Content-Digest`](https://www.rfc-editor.
 
 Environment knobs:
 
-* `MYOS_WEBHOOK_JWKS_URL` – override JWKS endpoint (defaults to the sandbox URL above).
+* `MYOS_WEBHOOK_JWKS_URL` – override JWKS endpoint (defaults to the dev URL above).
 * `MYOS_WEBHOOK_TOLERANCE_SEC` – clock skew/window for HTTP signatures & timestamps (default `300`).
 * `MYOS_WEBHOOK_REPLAY_TTL_SEC` – how long delivery IDs stay in DynamoDB for replay protection (default `86400`).
 
