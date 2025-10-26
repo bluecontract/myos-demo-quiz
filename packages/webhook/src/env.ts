@@ -19,6 +19,11 @@ export interface AppConfig {
     baseUrl: string;
     apiKey: string;
   };
+  webhook: {
+    jwksUrl: string;
+    toleranceSeconds: number;
+    replayTtlSeconds: number;
+  };
 }
 
 const secretsClient = new SecretsManagerClient({});
@@ -39,6 +44,13 @@ export async function loadConfig(options: { forceRefresh?: boolean } = {}): Prom
   const logLevel = process.env.LOG_LEVEL ?? 'INFO';
   const openAiModel = process.env.OPENAI_MODEL ?? 'gpt-4o-mini';
   const myosBaseUrl = requiredEnv('MYOS_BASE_URL');
+  const jwksUrl =
+    process.env.MYOS_WEBHOOK_JWKS_URL ??
+    'https://assets.api.myos.blue/.well-known/jwks.json';
+  const toleranceSeconds =
+    parseOptionalInt(process.env.MYOS_WEBHOOK_TOLERANCE_SEC) ?? 5 * 60;
+  const replayTtlSeconds =
+    parseOptionalInt(process.env.MYOS_WEBHOOK_REPLAY_TTL_SEC) ?? 24 * 60 * 60;
 
   const mockOpenAi = (process.env.MOCK_OPENAI ?? 'false').toLowerCase() === 'true';
   const openAiKey = mockOpenAi
@@ -68,6 +80,11 @@ export async function loadConfig(options: { forceRefresh?: boolean } = {}): Prom
     myos: {
       baseUrl: myosBaseUrl,
       apiKey: myosKey
+    },
+    webhook: {
+      jwksUrl,
+      toleranceSeconds,
+      replayTtlSeconds
     }
   };
 

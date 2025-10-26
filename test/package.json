@@ -15,6 +15,7 @@
     "@myos-quiz/webhook": "workspace:*",
     "@aws-sdk/client-dynamodb": "^3.609.0",
     "@aws-sdk/client-secrets-manager": "^3.609.0",
-    "@aws-sdk/lib-dynamodb": "^3.609.0"
+    "@aws-sdk/lib-dynamodb": "^3.609.0",
+    "http-message-signatures": "^1.0.4"
   }
 }

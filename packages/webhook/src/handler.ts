@@ -28,10 +28,12 @@ import { HttpMyOsClient } from '@myos-quiz/myos-http';
 import {
   DynamoQuestionRepo,
   DynamoRateLimiter,
-  DynamoTimelineRegistry
+  DynamoTimelineRegistry,
+  DynamoWebhookDeliveryStore
 } from '@myos-quiz/persistence-ddb';
 import { loadConfig } from './env';
 import { extractTimelineIds } from './timeline-extractor';
+import { MyOsWebhookVerifier, WebhookVerificationError } from './webhook-verifier';
 import packageJson from '../../../package.json';
 
 const logger = new Logger({ serviceName: process.env.APP_NAME ?? 'myos-quiz' });
@@ -50,6 +52,7 @@ interface AppContext {
   appName: string;
   timelineRegistry: TimelineRegistry;
   timelineGuardTtlHours: number;
+  webhookVerifier: MyOsWebhookVerifier;
 }
 
 let appContextPromise: Promise<AppContext> | undefined;
@@ -163,6 +166,10 @@ async function bootstrap(): Promise<AppContext> {
     tableName: config.controlTableName,
     defaultTtlHours: config.timelineGuardTtlHours
   });
+  const deliveryStore = new DynamoWebhookDeliveryStore({
+    tableName: config.controlTableName,
+    replayTtlSeconds: config.webhook.replayTtlSeconds
+  });
 
   const realAiClient = new OpenAiClient({ defaultModel: config.openAi.model });
   const mockAiClient = new OpenAiMockClient({ seed: config.openAiMockSeed });
@@ -187,6 +194,14 @@ async function bootstrap(): Promise<AppContext> {
     debug: (message, context) =>
       context ? logger.debug(message, context) : logger.debug(message)
   });
+  const webhookVerifier = new MyOsWebhookVerifier({
+    jwksUrl: config.webhook.jwksUrl,
+    toleranceSeconds: config.webhook.toleranceSeconds,
+    replayTtlSeconds: config.webhook.replayTtlSeconds,
+    deliveryStore,
+    logger,
+    metrics
+  });
   return {
     orchestrator,
     repo,
@@ -195,7 +210,8 @@ async function bootstrap(): Promise<AppContext> {
     stage: config.stage,
     appName: config.appName,
     timelineRegistry,
-    timelineGuardTtlHours: config.timelineGuardTtlHours
+    timelineGuardTtlHours: config.timelineGuardTtlHours,
+    webhookVerifier
   };
 }
 
@@ -232,15 +248,34 @@ async function baseHandler(
 
     if (event.requestContext.http.method === 'POST' && matchesPath(event.rawPath, '/webhooks/myos')) {
       const app = await getAppContext();
-      const rawBody = event.body ?? '';
+      const rawBodyBuffer = getRawBodyBuffer(event);
+      const rawBody = rawBodyBuffer.toString('utf8');
       logger.debug('Received raw MyOS webhook body', {
-        length: rawBody.length,
+        length: rawBodyBuffer.length,
         preview: rawBody.slice(0, 512)
       });
-      // TODO: Add HMAC signature verification to prevent tampering
+      let verification;
+      try {
+        verification = await app.webhookVerifier.verify(event, rawBodyBuffer);
+      } catch (error) {
+        const serialized = serializeError(error);
+        logger.warn('Rejecting MyOS webhook due to verification error', { error: serialized });
+        const status =
+          error instanceof WebhookVerificationError ? error.statusCode : 401;
+        const reason =
+          error instanceof WebhookVerificationError ? error.reason : 'webhook_verification_failed';
+        return {
+          statusCode: status,
+          body: JSON.stringify({ ok: false, reason }),
+          headers: { 'content-type': 'application/json' }
+        };
+      }
+      if (verification.duplicate) {
+        return ok({ ok: true, replay: true });
+      }
       let snapshot: DocumentSnapshot;
       try {
-        snapshot = mapPayloadToSnapshot(event.body);
+        snapshot = mapPayloadToSnapshot(rawBody);
       } catch (normalizationError) {
         logger.error('Ignoring MyOS webhook payload due to normalization error', {
           error: serializeError(normalizationError)
@@ -290,6 +325,7 @@ async function baseHandler(
         emittedCount: snapshot.emitted?.length ?? 0
       });
       await app.orchestrator.onDocumentUpdated(snapshot);
+      await app.webhookVerifier.markDelivered(verification.deliveryId);
       return ok({ ok: true });
     }
 
@@ -423,6 +459,14 @@ function safeJsonParse(body: string): unknown {
   } catch (error) {
     throw new Error('Malformed JSON body', { cause: error as Error });
   }
+}
+
+function getRawBodyBuffer(event: APIGatewayProxyEventV2): Buffer {
+  const body = event.body ?? '';
+  if (event.isBase64Encoded) {
+    return Buffer.from(body, 'base64');
+  }
+  return Buffer.from(body, 'utf8');
 }
 
 function getCorrelationId(event: APIGatewayProxyEventV2): string {

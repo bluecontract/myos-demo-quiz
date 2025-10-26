@@ -110,6 +110,13 @@ const baseContext: Context = {
   succeed: () => undefined
 };
 
+function createWebhookVerifierMock() {
+  return {
+    verify: vi.fn().mockResolvedValue({ deliveryId: 'verify-123', duplicate: false }),
+    markDelivered: vi.fn().mockResolvedValue(undefined)
+  };
+}
+
 function buildAppContext(fakeMyOs: MyOsClient) {
   const repo = new DynamoQuestionRepo({
     tableName: QUESTIONS_TABLE,
@@ -124,6 +131,7 @@ function buildAppContext(fakeMyOs: MyOsClient) {
   const cappedAi = new CappedAiClient(realAi, mockAi, limiter, 1, false);
   const orchestrator = new Orchestrator(cappedAi, fakeMyOs, repo);
   const timelineRegistry: TimelineRegistry = { checkAndRegister: async () => true };
+  const webhookVerifier = createWebhookVerifierMock();
   return {
     orchestrator,
     repo,
@@ -132,7 +140,8 @@ function buildAppContext(fakeMyOs: MyOsClient) {
     stage: 'test',
     appName: 'myos-quiz',
     timelineRegistry,
-    timelineGuardTtlHours: 48
+    timelineGuardTtlHours: 48,
+    webhookVerifier
   };
 }
 
