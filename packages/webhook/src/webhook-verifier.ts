@@ -5,7 +5,7 @@ import type { Metrics } from '@aws-lambda-powertools/metrics';
 import { MetricUnit } from '@aws-lambda-powertools/metrics';
 import { httpbis, createVerifier, UnknownKeyError, type VerifyingKey } from 'http-message-signatures';
 import { fetch as undiciFetch } from 'undici';
-import { DynamoWebhookDeliveryStore } from '@myos-quiz/persistence-ddb';
+import type { DynamoWebhookDeliveryStore } from '@myos-quiz/persistence-ddb';
 
 const { verifyMessage } = httpbis;
 
