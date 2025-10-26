@@ -50,6 +50,17 @@ const baseContext: Context = {
   succeed: () => undefined
 };
 
+function createWebhookVerifierMock(result?: { deliveryId?: string; duplicate?: boolean }) {
+  const resolved = {
+    deliveryId: result?.deliveryId ?? 'verify-123',
+    duplicate: result?.duplicate ?? false
+  };
+  return {
+    verify: vi.fn().mockResolvedValue(resolved),
+    markDelivered: vi.fn().mockResolvedValue(undefined)
+  };
+}
+
 describe('webhook handler – MyOS payload', () => {
   beforeEach(() => {
     process.env.APP_NAME = 'myos-quiz';
@@ -77,7 +88,8 @@ describe('webhook handler – MyOS payload', () => {
       timelineRegistry: {
         checkAndRegister: vi.fn().mockResolvedValue(true)
       } as TimelineRegistry,
-      timelineGuardTtlHours: 48
+      timelineGuardTtlHours: 48,
+      webhookVerifier: createWebhookVerifierMock()
     }));
 
     const response = await handler(
@@ -116,7 +128,8 @@ describe('webhook handler – MyOS payload', () => {
       timelineRegistry: {
         checkAndRegister: vi.fn().mockResolvedValue(true)
       } as TimelineRegistry,
-      timelineGuardTtlHours: 48
+      timelineGuardTtlHours: 48,
+      webhookVerifier: createWebhookVerifierMock()
     }));
 
     const response = await handler(
@@ -129,5 +142,36 @@ describe('webhook handler – MyOS payload', () => {
 
     expect(response.statusCode).toBe(200);
     expect(onDocumentUpdated).not.toHaveBeenCalled();
+  });
+
+  it('skips orchestrator work when webhook verification reports a duplicate', async () => {
+    const onDocumentUpdated = vi.fn();
+    const webhookVerifier = createWebhookVerifierMock({ duplicate: true, deliveryId: 'dup-1' });
+
+    __setAppContextFactory(async () => ({
+      orchestrator: { onDocumentUpdated } as unknown as { onDocumentUpdated: typeof onDocumentUpdated },
+      repo: {} as unknown,
+      ai: {} as unknown,
+      myos: {} as unknown,
+      stage: 'test',
+      appName: 'myos-quiz',
+      timelineRegistry: {
+        checkAndRegister: vi.fn().mockResolvedValue(true)
+      } as TimelineRegistry,
+      timelineGuardTtlHours: 48,
+      webhookVerifier
+    }));
+
+    const response = await handler(
+      {
+        ...baseEvent,
+        body: rawMyosPayload
+      },
+      baseContext
+    );
+
+    expect(response.statusCode).toBe(200);
+    expect(onDocumentUpdated).not.toHaveBeenCalled();
+    expect(webhookVerifier.markDelivered).not.toHaveBeenCalled();
   });
 });

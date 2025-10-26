@@ -55,6 +55,13 @@ const baseContext: Context = {
   succeed: () => undefined
 };
 
+function createWebhookVerifierMock() {
+  return {
+    verify: vi.fn().mockResolvedValue({ deliveryId: 'verify-123', duplicate: false }),
+    markDelivered: vi.fn().mockResolvedValue(undefined)
+  };
+}
+
 describe('Timeline guard integration', () => {
   beforeEach(() => {
     process.env.APP_NAME = 'myos-quiz';
@@ -100,7 +107,8 @@ describe('Timeline guard integration', () => {
       stage: 'test',
       appName: 'myos-quiz',
       timelineRegistry,
-      timelineGuardTtlHours: 48
+      timelineGuardTtlHours: 48,
+      webhookVerifier: createWebhookVerifierMock()
     }));
 
     const firstResponse = await handler(firstEvent, baseContext);
@@ -159,7 +167,8 @@ describe('Timeline guard integration', () => {
       stage: 'test',
       appName: 'myos-quiz',
       timelineRegistry: { checkAndRegister } as TimelineRegistry,
-      timelineGuardTtlHours: 48
+      timelineGuardTtlHours: 48,
+      webhookVerifier: createWebhookVerifierMock()
     }));
 
     const response = await handler(event, baseContext);

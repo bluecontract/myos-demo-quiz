@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import nock from 'nock';
 import { ConditionalCheckFailedException } from '@aws-sdk/client-dynamodb';
 import { GetCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
@@ -117,6 +117,13 @@ afterEach(() => {
   nock.cleanAll();
 });
 
+function createWebhookVerifierMock() {
+  return {
+    verify: vi.fn().mockResolvedValue({ deliveryId: 'verify-123', duplicate: false }),
+    markDelivered: vi.fn().mockResolvedValue(undefined)
+  };
+}
+
 function buildAppContext(fakeMyOs: MyOsClient) {
   const repo = new DynamoQuestionRepo({
     tableName: TABLE_NAME,
@@ -127,6 +134,7 @@ function buildAppContext(fakeMyOs: MyOsClient) {
   const timelineRegistry: TimelineRegistry = {
     checkAndRegister: async () => true
   };
+  const webhookVerifier = createWebhookVerifierMock();
   return {
     orchestrator,
     repo,
@@ -135,7 +143,8 @@ function buildAppContext(fakeMyOs: MyOsClient) {
     stage: 'test',
     appName: 'myos-quiz',
     timelineRegistry,
-    timelineGuardTtlHours: 48
+    timelineGuardTtlHours: 48,
+    webhookVerifier
   };
 }
 

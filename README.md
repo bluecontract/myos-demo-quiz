@@ -236,10 +236,23 @@ CONTROL_TABLE_NAME=<if you enabled control table>
 MAX_OPENAI_CALLS_PER_HOUR=60
 MOCK_OPENAI=false
 TIMELINE_GUARD_TTL_HOURS=48
+MYOS_WEBHOOK_JWKS_URL=https://assets.api.dev.myos.blue/.well-known/jwks.json
+MYOS_WEBHOOK_TOLERANCE_SEC=300
+MYOS_WEBHOOK_REPLAY_TTL_SEC=86400
 LOG_LEVEL=INFO
 ```
 
 **Wire the webhook:** In MyOS, subscribe admin X to **`DOCUMENT_EPOCH_ADVANCED`** for the game session and point it at the **API Gateway** URL (`POST /webhooks/myos`).
+
+### Webhook verification
+
+The webhook handler enforces [RFC 9530 `Content-Digest`](https://www.rfc-editor.org/rfc/rfc9530), verifies [RFC 9421 HTTP Message Signatures](https://www.rfc-editor.org/rfc/rfc9421) (`Ed25519`, label `myos`), enforces a ±5‑minute clock skew, and deduplicates deliveries via `X-MyOS-Delivery-Id`. Keys are pulled from the public JWKS (`https://assets.api.myos.blue/.well-known/jwks.json`) and cached according to `Cache-Control`/`ETag`.
+
+Environment knobs:
+
+* `MYOS_WEBHOOK_JWKS_URL` – override JWKS endpoint (defaults to the dev URL above).
+* `MYOS_WEBHOOK_TOLERANCE_SEC` – clock skew/window for HTTP signatures & timestamps (default `300`).
+* `MYOS_WEBHOOK_REPLAY_TTL_SEC` – how long delivery IDs stay in DynamoDB for replay protection (default `86400`).
 
 ---
 

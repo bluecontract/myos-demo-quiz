@@ -150,6 +150,12 @@ importers:
       aws-lambda:
         specifier: ^1.0.7
         version: 1.0.7
+      http-message-signatures:
+        specifier: ^1.0.4
+        version: 1.0.4
+      undici:
+        specifier: ^6.22.0
+        version: 6.22.0
       zod:
         specifier: ^3.23.8
         version: 3.25.76
@@ -184,6 +190,9 @@ importers:
       '@myos-quiz/webhook':
         specifier: workspace:*
         version: link:../packages/webhook
+      http-message-signatures:
+        specifier: ^1.0.4
+        version: 1.0.4
 
 packages:
 
@@ -2979,6 +2988,12 @@ packages:
       function-bind: 1.1.2
     dev: false
 
+  /http-message-signatures@1.0.4:
+    resolution: {integrity: sha512-gavCQWnxHFg0BVlKs6CmYK7hNSH1o0x0mHTC68yBAHYOYuTVXPv52mEE7QuT5TenfiagTdOa/zPJzen4lEX7Rg==}
+    dependencies:
+      structured-headers: 1.0.1
+    dev: false
+
   /human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
@@ -3792,6 +3807,11 @@ packages:
 
   /strnum@2.1.1:
     resolution: {integrity: sha512-7ZvoFTiCnGxBtDqJ//Cu6fWtZtc7Y3x+QOirG15wztbdngGSkht27o2pyGWrVy0b4WAy3jbKmnoK6g5VlVNUUw==}
+    dev: false
+
+  /structured-headers@1.0.1:
+    resolution: {integrity: sha512-QYBxdBtA4Tl5rFPuqmbmdrS9kbtren74RTJTcs0VSQNVV5iRhJD4QlYTLD0+81SBwUQctjEQzjTRI3WG4DzICA==}
+    engines: {node: '>= 14', npm: '>=6'}
     dev: false
 
   /supports-color@7.2.0:

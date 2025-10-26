@@ -59,8 +59,16 @@ export class MyosQuizStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY
     });
 
-    const myosBaseUrl = this.node.tryGetContext('myosBaseUrl') ?? 'https://api.myos.blue';
+    const myosBaseUrl = this.node.tryGetContext('myosBaseUrl') ?? stage === 'prod' ? 'https://api.myos.blue' : 'https://api.dev.myos.blue';
     const openAiModel = this.node.tryGetContext('openAiModel') ?? 'gpt-4o-mini';
+
+    const myosWebhookJwksUrl =
+      this.node.tryGetContext('myosWebhookJwksUrl') ??
+      stage === 'prod' ? 'https://assets.api.myos.blue/.well-known/jwks.json' : 'https://assets.api.dev.myos.blue/.well-known/jwks.json';
+    const myosWebhookToleranceSec =
+      this.node.tryGetContext('myosWebhookToleranceSec') ?? '300';
+    const myosWebhookReplayTtlSec =
+      this.node.tryGetContext('myosWebhookReplayTtlSec') ?? (24 * 60 * 60).toString();
 
     const webhookFunction = new NodejsFunction(this, 'MyOSWebhookHandler', {
       functionName: `${appName}-${stage}-webhook`,
@@ -89,7 +97,10 @@ export class MyosQuizStack extends Stack {
         POWERTOOLS_LOGGER_LOG_EVENT: 'true',
         MOCK_OPENAI: 'false',
         MAX_OPENAI_CALLS_PER_HOUR: '100',
-        TIMELINE_GUARD_TTL_HOURS: '48'
+        TIMELINE_GUARD_TTL_HOURS: '48',
+        MYOS_WEBHOOK_JWKS_URL: myosWebhookJwksUrl,
+        MYOS_WEBHOOK_TOLERANCE_SEC: myosWebhookToleranceSec,
+        MYOS_WEBHOOK_REPLAY_TTL_SEC: myosWebhookReplayTtlSec
       },
       reservedConcurrentExecutions: undefined,
       tracing: Tracing.ACTIVE,
