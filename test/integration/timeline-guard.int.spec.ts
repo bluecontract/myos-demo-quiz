@@ -1,17 +1,9 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { APIGatewayProxyEventV2, Context } from 'aws-lambda';
 import { handler, __setAppContextFactory } from '@myos-quiz/webhook';
 import type { TimelineRegistry } from '@myos-quiz/core';
+import { loadMyosFixtureResolved, loadMyosFixtureResolvedJson } from '../fixtures/myos';
 
-const fixturePath = join(
-  __dirname,
-  '..',
-  'fixtures',
-  'myos',
-  'document-updated-event_round-requested.json'
-);
 
 const baseEvent: Omit<APIGatewayProxyEventV2, 'body'> = {
   version: '2.0',
@@ -76,7 +68,7 @@ describe('Timeline guard integration', () => {
   });
 
   it('skips orchestrator when timeline is already bound to another session', async () => {
-    const snapshotBody = readFileSync(fixturePath, 'utf8');
+    const snapshotBody = loadMyosFixtureResolved('document-updated-event_round-requested.json');
     const firstEvent: APIGatewayProxyEventV2 = {
       ...baseEvent,
       body: snapshotBody
@@ -144,7 +136,7 @@ describe('Timeline guard integration', () => {
   });
 
   it('skips processing when timeline channels are missing', async () => {
-    const payload = JSON.parse(readFileSync(fixturePath, 'utf8'));
+    const payload = loadMyosFixtureResolvedJson('document-updated-event_round-requested.json');
     delete payload.object.document.contracts.adminChannel.timelineId;
     delete payload.object.document.contracts.playerAChannel.timelineId;
     delete payload.object.document.contracts.playerBChannel.timelineId;

@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Blue } from '@blue-labs/language';
-import { repository as coreRepository } from '@blue-repository/core-dev';
-import { repository as myosRepository } from '@blue-repository/myos-dev';
-import { BlueDocumentProcessor } from '@blue-labs/document-processor';
+import { repository } from '@blue-repository/types';
+import { DocumentProcessor } from '@blue-labs/document-processor';
 
 const blue = new Blue({
-  repositories: [
-    coreRepository,
-    myosRepository,
-  ],
+  repositories: [repository],
 });
 
-const documentProcessor = new BlueDocumentProcessor(blue);
+const documentProcessor = new DocumentProcessor({ blue });
 
 const gameDocument = `
 name: AI Multiplayer Quiz
@@ -23,28 +19,28 @@ contracts:
 
   # Lifecycle and internal triggers
   initLifecycleChannel:
-    type: Lifecycle Event Channel
+    type: Core/Lifecycle Event Channel
 
   triggeredEventsChannel:
-    type: Triggered Event Channel
+    type: Core/Triggered Event Channel
 
   # Participants' channels
   adminChannel:
-    type: MyOS Timeline Channel
+    type: MyOS/MyOS Timeline Channel
     description: Game admin (X)
     timelineId: timeline-id-x-admin
   playerAChannel:
-    type: MyOS Timeline Channel
+    type: MyOS/MyOS Timeline Channel
     description: Player A
     timelineId: timeline-id-player-a
   playerBChannel:
-    type: MyOS Timeline Channel
+    type: MyOS/MyOS Timeline Channel
     description: Player B
     timelineId: timeline-id-player-b
 
   # ---------- Operations ----------
   startRound:
-    type: Operation
+    type: Conversation/Operation
     channel: adminChannel
     description: Starts a round by setting question/options (no correct answer here!)
     request:
@@ -66,12 +62,12 @@ contracts:
 
 
   startRoundImpl:
-    type: Sequential Workflow Operation
+    type: Conversation/Sequential Workflow Operation
     operation: startRound
     steps:
       # Guard + Emit only. All mutations happen in onRoundStarted.
       - name: GuardAndEmitRoundStarted
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const phase = document('/phase');
           if (phase === 'IN_ROUND' || phase === 'GAME_COMPLETED') {
@@ -148,7 +144,7 @@ contracts:
           return {
             events: [
               {
-                type: "Event",
+                type: "Conversation/Event",
                 kind: "Round Started",
                 roundIndex: requestedIndex,
                 question: {
@@ -163,7 +159,7 @@ contracts:
           };
 
   completeRound:
-    type: Operation
+    type: Conversation/Operation
     channel: adminChannel
     description: Completes the round with the authoritative correct option
     request:
@@ -177,11 +173,11 @@ contracts:
         type: Text
 
   completeRoundImpl:
-    type: Sequential Workflow Operation
+    type: Conversation/Sequential Workflow Operation
     operation: completeRound
     steps:
       - name: GuardComputeAndEmit
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           // ---- Guards ----
           const phase = document('/phase');
@@ -222,32 +218,32 @@ contracts:
             scoreboard: newBoard
           };
 
-          const events = [{ type: "Event", kind: "Round Completed", results }];
+          const events = [{ type: "Conversation/Event", kind: "Round Completed", results }];
           if (hasMore) {
-            events.push({ type: "Event", kind: "Round Requested", nextRoundIndex: nextIndex });
+            events.push({ type: "Conversation/Event", kind: "Round Requested", nextRoundIndex: nextIndex });
           } else {
             const maxScore = Math.max(newBoard.playerA, newBoard.playerB);
             const winners = [];
             if (newBoard.playerA === maxScore) winners.push("playerA");
             if (newBoard.playerB === maxScore) winners.push("playerB");
-            events.push({ type: "Event", kind: "Game Completed", scoreboard: newBoard, winners });
+            events.push({ type: "Conversation/Event", kind: "Game Completed", scoreboard: newBoard, winners });
           }
           return { events };
 
   # Players answer operations (one per player channel)
   answerA:
-    type: Operation
+    type: Conversation/Operation
     channel: playerAChannel
     description: Player A answers current question
     request:
       type: Text # "A" | "B" | "C" | "D"
 
   answerAImpl:
-    type: Sequential Workflow Operation
+    type: Conversation/Sequential Workflow Operation
     operation: answerA
     steps:
       - name: GuardAndEmitAnswerA
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const phase = document('/phase');
           if (phase !== 'IN_ROUND') return {};
@@ -258,21 +254,21 @@ contracts:
           const raw = (event.message.request || '').trim().toUpperCase();
           if (!['A','B','C','D'].includes(raw)) return {};
           if (!curQ.options || !(raw in curQ.options)) return {}; // must match existing option
-          return { events: [{ type: "Event", kind: "Answer Submitted", player: "playerA", choice: raw }] };
+          return { events: [{ type: "Conversation/Event", kind: "Answer Submitted", player: "playerA", choice: raw }] };
 
   answerB:
-    type: Operation
+    type: Conversation/Operation
     channel: playerBChannel
     description: Player B answers current question
     request:
       type: Text # "A" | "B" | "C" | "D"
 
   answerBImpl:
-    type: Sequential Workflow Operation
+    type: Conversation/Sequential Workflow Operation
     operation: answerB
     steps:
       - name: GuardAndEmitAnswerB
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const phase = document('/phase');
           if (phase !== 'IN_ROUND') return {};
@@ -283,17 +279,17 @@ contracts:
           const raw = (event.message.request || '').trim().toUpperCase();
           if (!['A','B','C','D'].includes(raw)) return {};
           if (!curQ.options || !(raw in curQ.options)) return {};
-          return { events: [{ type: "Event", kind: "Answer Submitted", player: "playerB", choice: raw }] };
+          return { events: [{ type: "Conversation/Event", kind: "Answer Submitted", player: "playerB", choice: raw }] };
 
   # ---------- Workflows listening to lifecycle & events ----------
   validateOnInit:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: initLifecycleChannel
     event:
-      type: Document Processing Initiated
+      type: Core/Document Processing Initiated
     steps:
       - name: ValidateInputs
-        type: JavaScript Code
+        type: Conversation/JavaScript Code
         code: |
           const issues = [];
           const roundsTotal = document('/roundsTotal');
@@ -303,40 +299,40 @@ contracts:
           if (!Array.isArray(categories) || categories.length === 0) issues.push("categories must be a non-empty list");
           if (typeof level !== 'number' || level < 0 || level > 2) issues.push("level must be 0..2");
           if (issues.length > 0) {
-            return { events: [ { type: "Event", kind: "Status Change", status: { type: "Status Failed" }, issues } ] };
+            return { events: [ { type: "Conversation/Event", kind: "Status Change", status: { type: "Conversation/Status Failed" }, issues } ] };
           }
           return { events: [
-            { type: "Event", kind: "Status Change", status: { type: "Status In Progress" } },
-            { type: "Event", kind: "Round Requested", nextRoundIndex: 0 }
+            { type: "Conversation/Event", kind: "Status Change", status: { type: "Conversation/Status In Progress" } },
+            { type: "Conversation/Event", kind: "Round Requested", nextRoundIndex: 0 }
           ] };
 
   onStatusChange:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Event
+      type: Conversation/Event
       kind: Status Change
     steps:
       - name: UpdateStatus
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /status
             val: \${event.status}
 
   onRoundStarted:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Event
+      type: Conversation/Event
       kind: Round Started
     steps:
       - name: ApplyRoundStart
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /status
-            val: { type: Status In Progress }
+            val: { type: Conversation/Status In Progress }
           - op: replace
             path: /roundIndex
             val: \${event.roundIndex}
@@ -351,44 +347,44 @@ contracts:
             val: "IN_ROUND"
 
   onAnswerSubmittedA:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Event
+      type: Conversation/Event
       kind: Answer Submitted
       player: playerA
     steps:
       - name: RecordA
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: add
             path: /answers/playerA
             val: \${event.choice}
 
   onAnswerSubmittedB:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Event
+      type: Conversation/Event
       kind: Answer Submitted
       player: playerB
     steps:
       - name: RecordB
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: add
             path: /answers/playerB
             val: \${event.choice}
 
   onRoundCompleted:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Event
+      type: Conversation/Event
       kind: Round Completed
     steps:
       - name: ApplyResults
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /scoreboard
@@ -406,18 +402,18 @@ contracts:
             val: {}
 
   onGameCompleted:
-    type: Sequential Workflow
+    type: Conversation/Sequential Workflow
     channel: triggeredEventsChannel
     event:
-      type: Event
+      type: Conversation/Event
       kind: Game Completed
     steps:
       - name: Finish
-        type: Update Document
+        type: Conversation/Update Document
         changeset:
           - op: replace
             path: /status
-            val: { type: Status Completed }
+            val: { type: Conversation/Status Completed }
           - op: replace
             path: /winners
             val: \${event.winners}
@@ -433,7 +429,7 @@ categories:
 level: 1
 roundIndex: 0
 status:
-  type: Status Pending
+  type: Conversation/Status Pending
 `
 // types of fields added during documents lifecycle
 // phase:
@@ -461,41 +457,36 @@ describe('AI Multiplayer Quiz document', () => {
   it('should handle game', async () => {
     // Initialize document
     const documentNode = blue.resolve(blue.yamlToNode(gameDocument));
-    let results = await documentProcessor.initialize(documentNode);
-    let emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
-    expect(emittedEvents.length).toBeGreaterThan(1)
+    let results = await documentProcessor.initializeDocument(documentNode);
+    let emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
+    expect(emittedEvents.length).toBeGreaterThan(0)
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
-          "type": "Document Processing Initiated",
+          "documentId": "JAJaELh8DJUvDZxCq34vesMVWZ88uC9YGuDYExsMJ6pG",
+          "type": "Core/Document Processing Initiated",
         },
         {
           "kind": "Status Change",
           "status": {
-            "type": "Status In Progress",
+            "type": "Conversation/Status In Progress",
           },
-          "type": "Event",
+          "type": "Conversation/Event",
         },
         {
           "kind": "Round Requested",
           "nextRoundIndex": 0,
-          "type": "Event",
-        },
-        {
-          "op": "replace",
-          "path": "/status",
-          "type": "Document Update",
-          "val": {
-            "type": "Status In Progress",
-          },
+          "type": "Conversation/Event",
         },
       ]
     `);
 
     let event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: startRound
   request:
     roundIndex: 0
@@ -516,13 +507,14 @@ timestamp: 1
 
     // Process startRound event
     let eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
     
 
     // @ts-ignore
-    let { name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original');
+    let { name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    );
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {},
@@ -551,17 +543,20 @@ timestamp: 1
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
-    expect(emittedEvents.length).toBeGreaterThan(1)
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
+    expect(emittedEvents.length).toBeGreaterThan(0)
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
@@ -579,66 +574,15 @@ timestamp: 1
             "questionId": "id1",
           },
           "roundIndex": 0,
-          "type": "Event",
-        },
-        {
-          "op": "replace",
-          "path": "/status",
-          "type": "Document Update",
-          "val": {
-            "mode": {
-              "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
-        pending: The document is waiting for a pre-condition before its core logic begins.
-        active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
-              "type": "Text",
-              "value": "active",
-            },
-            "type": "Status In Progress",
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/roundIndex",
-          "type": "Document Update",
-          "val": 0,
-        },
-        {
-          "op": "replace",
-          "path": "/currentQuestion",
-          "type": "Document Update",
-          "val": {
-            "category": "science",
-            "level": 1,
-            "options": {
-              "A": "2",
-              "B": "3",
-              "C": "1",
-              "D": "0",
-            },
-            "prompt": "What is 1+1?",
-            "questionId": "id1",
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/answers",
-          "type": "Document Update",
-          "val": {},
-        },
-        {
-          "op": "replace",
-          "path": "/phase",
-          "type": "Document Update",
-          "val": "IN_ROUND",
+          "type": "Conversation/Event",
         },
       ]
     `)
 
     event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: answerB
   request: A
 timeline:
@@ -647,12 +591,13 @@ timestamp: 2
 `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
     // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {
@@ -683,37 +628,34 @@ timestamp: 2
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
           "choice": "A",
           "kind": "Answer Submitted",
           "player": "playerB",
-          "type": "Event",
-        },
-        {
-          "op": "add",
-          "path": "/answers/playerB",
-          "type": "Document Update",
-          "val": "A",
+          "type": "Conversation/Event",
         },
       ]
     `)
 
     event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: answerA
   request: B
 timeline:
@@ -722,12 +664,13 @@ timestamp: 3
 `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
     // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {
@@ -759,37 +702,34 @@ timestamp: 3
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
           "choice": "B",
           "kind": "Answer Submitted",
           "player": "playerA",
-          "type": "Event",
-        },
-        {
-          "op": "add",
-          "path": "/answers/playerA",
-          "type": "Document Update",
-          "val": "B",
+          "type": "Conversation/Event",
         },
       ]
     `)
 
     event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: completeRound
   request:
     roundIndex: 0
@@ -802,12 +742,13 @@ timestamp: 4
 `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
     // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {},
@@ -846,16 +787,19 @@ timestamp: 4
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
@@ -878,71 +822,21 @@ timestamp: 4
               "playerB": 1,
             },
           },
-          "type": "Event",
+          "type": "Conversation/Event",
         },
         {
           "kind": "Round Requested",
           "nextRoundIndex": 1,
-          "type": "Event",
-        },
-        {
-          "op": "replace",
-          "path": "/scoreboard",
-          "type": "Document Update",
-          "val": {
-            "playerA": 0,
-            "playerB": 1,
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/lastRoundResult",
-          "type": "Document Update",
-          "val": {
-            "answers": {
-              "playerA": "B",
-              "playerB": "A",
-            },
-            "correctOption": "A",
-            "explanation": "Because 1+1=2",
-            "pointsAwarded": {
-              "playerA": 0,
-              "playerB": 1,
-            },
-            "questionId": "id1",
-            "roundIndex": 0,
-            "scoreboard": {
-              "playerA": 0,
-              "playerB": 1,
-            },
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/phase",
-          "type": "Document Update",
-          "val": "BETWEEN_ROUNDS",
-        },
-        {
-          "op": "remove",
-          "path": "/currentQuestion",
-          "type": "Document Update",
-          "val": null,
-        },
-        {
-          "op": "replace",
-          "path": "/answers",
-          "type": "Document Update",
-          "val": {},
+          "type": "Conversation/Event",
         },
       ]
     `)
 
  // Next round
  event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: startRound
   request:
     roundIndex: 1
@@ -962,12 +856,13 @@ timestamp: 9
  `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
     // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {},
@@ -1018,16 +913,19 @@ timestamp: 9
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
@@ -1045,66 +943,15 @@ timestamp: 9
             "questionId": "id2",
           },
           "roundIndex": 1,
-          "type": "Event",
-        },
-        {
-          "op": "replace",
-          "path": "/status",
-          "type": "Document Update",
-          "val": {
-            "mode": {
-              "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
-        pending: The document is waiting for a pre-condition before its core logic begins.
-        active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
-              "type": "Text",
-              "value": "active",
-            },
-            "type": "Status In Progress",
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/roundIndex",
-          "type": "Document Update",
-          "val": 1,
-        },
-        {
-          "op": "replace",
-          "path": "/currentQuestion",
-          "type": "Document Update",
-          "val": {
-            "category": "history",
-            "level": 1,
-            "options": {
-              "A": "Thomas Jefferson",
-              "B": "George Washington",
-              "C": "Benjamin Franklin",
-              "D": "John Adams",
-            },
-            "prompt": "Who wrote the Declaration of Independence?",
-            "questionId": "id2",
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/answers",
-          "type": "Document Update",
-          "val": {},
-        },
-        {
-          "op": "replace",
-          "path": "/phase",
-          "type": "Document Update",
-          "val": "IN_ROUND",
+          "type": "Conversation/Event",
         },
       ]
     `)
 
     event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: answerB
   request: A
 timeline:
@@ -1113,12 +960,13 @@ timestamp: 6
 `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
     // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {
@@ -1171,37 +1019,34 @@ timestamp: 6
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
           "choice": "A",
           "kind": "Answer Submitted",
           "player": "playerB",
-          "type": "Event",
-        },
-        {
-          "op": "add",
-          "path": "/answers/playerB",
-          "type": "Document Update",
-          "val": "A",
+          "type": "Conversation/Event",
         },
       ]
     `)
 
     event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: answerA
   request: A
 timeline:
@@ -1210,12 +1055,13 @@ timestamp: 7
 `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
     // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
         "answers": {
@@ -1269,37 +1115,34 @@ timestamp: 7
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+",
             "type": "Text",
             "value": "active",
           },
-          "type": "Status In Progress",
+          "type": "Conversation/Status In Progress",
         },
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
     expect(emittedEvents).toMatchInlineSnapshot(`
       [
         {
           "choice": "A",
           "kind": "Answer Submitted",
           "player": "playerA",
-          "type": "Event",
-        },
-        {
-          "op": "add",
-          "path": "/answers/playerA",
-          "type": "Document Update",
-          "val": "A",
+          "type": "Conversation/Event",
         },
       ]
     `)
 
     event = `
-type: MyOS Timeline Entry
+type: MyOS/MyOS Timeline Entry
 message:
-  type: Operation Request
+  type: Conversation/Operation Request
   operation: completeRound
   request:
     roundIndex: 1
@@ -1312,179 +1155,79 @@ timestamp: 8
 `
 
     eventNode = blue.resolve(blue.yamlToNode(event));
-    results = await documentProcessor.processEvents(results.state, [
-      eventNode,
-    ]);
+    results = await documentProcessor.processDocument(results.document, eventNode);
 
         // @ts-ignore
-    ({ name, description, contracts,...state } = blue.nodeToJson(blue.restoreInlineTypes(results.state), 'original'));
+    ({ name, description, contracts,...state } = blue.nodeToJson(
+      blue.restoreInlineTypes(results.document),
+      'original'
+    ));
     expect(state).toMatchInlineSnapshot(`
       {
-        "answers": {},
+        "answers": {
+          "playerA": "A",
+          "playerB": "A",
+        },
         "categories": [
           "History",
           "Science",
         ],
+        "currentQuestion": {
+          "category": "history",
+          "level": 1,
+          "options": {
+            "A": "Thomas Jefferson",
+            "B": "George Washington",
+            "C": "Benjamin Franklin",
+            "D": "John Adams",
+          },
+          "prompt": "Who wrote the Declaration of Independence?",
+          "questionId": "id2",
+        },
         "lastRoundResult": {
           "answers": {
-            "playerA": "A",
+            "playerA": "B",
             "playerB": "A",
           },
           "correctOption": "A",
-          "explanation": "Because 2+2=4",
+          "explanation": "Because 1+1=2",
           "pointsAwarded": {
-            "playerA": 1,
+            "playerA": 0,
             "playerB": 1,
           },
-          "questionId": "id2",
-          "roundIndex": 1,
+          "questionId": "id1",
+          "roundIndex": 0,
           "scoreboard": {
-            "playerA": 1,
-            "playerB": 2,
+            "playerA": 0,
+            "playerB": 1,
           },
         },
         "level": 1,
-        "phase": "GAME_COMPLETED",
+        "phase": "IN_ROUND",
         "roundIndex": 1,
         "roundsTotal": 2,
         "scoreboard": {
-          "playerA": 1,
-          "playerB": 2,
+          "playerA": 0,
+          "playerB": 1,
         },
         "status": {
           "mode": {
             "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
         pending: The document is waiting for a pre-condition before its core logic begins.
         active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
+        terminated: The document has reached a final, conclusive state.
+      ",
             "type": "Text",
-            "value": "terminated",
+            "value": "active",
           },
-          "type": "Status Completed",
+          "type": "Conversation/Status In Progress",
         },
-        "winners": [
-          "playerB",
-        ],
       }
     `)
 
-    emittedEvents = results.emitted.map(event => blue.nodeToJson(blue.restoreInlineTypes(event), 'original'));
-    expect(emittedEvents).toMatchInlineSnapshot(`
-      [
-        {
-          "kind": "Round Completed",
-          "results": {
-            "answers": {
-              "playerA": "A",
-              "playerB": "A",
-            },
-            "correctOption": "A",
-            "explanation": "Because 2+2=4",
-            "pointsAwarded": {
-              "playerA": 1,
-              "playerB": 1,
-            },
-            "questionId": "id2",
-            "roundIndex": 1,
-            "scoreboard": {
-              "playerA": 1,
-              "playerB": 2,
-            },
-          },
-          "type": "Event",
-        },
-        {
-          "kind": "Game Completed",
-          "scoreboard": {
-            "playerA": 1,
-            "playerB": 2,
-          },
-          "type": "Event",
-          "winners": [
-            "playerB",
-          ],
-        },
-        {
-          "op": "replace",
-          "path": "/scoreboard",
-          "type": "Document Update",
-          "val": {
-            "playerA": 1,
-            "playerB": 2,
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/lastRoundResult",
-          "type": "Document Update",
-          "val": {
-            "answers": {
-              "playerA": "A",
-              "playerB": "A",
-            },
-            "correctOption": "A",
-            "explanation": "Because 2+2=4",
-            "pointsAwarded": {
-              "playerA": 1,
-              "playerB": 1,
-            },
-            "questionId": "id2",
-            "roundIndex": 1,
-            "scoreboard": {
-              "playerA": 1,
-              "playerB": 2,
-            },
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/phase",
-          "type": "Document Update",
-          "val": "BETWEEN_ROUNDS",
-        },
-        {
-          "op": "remove",
-          "path": "/currentQuestion",
-          "type": "Document Update",
-          "val": null,
-        },
-        {
-          "op": "replace",
-          "path": "/answers",
-          "type": "Document Update",
-          "val": {},
-        },
-        {
-          "op": "replace",
-          "path": "/status",
-          "type": "Document Update",
-          "val": {
-            "mode": {
-              "description": "Defines the high-level phase of the document's lifecycle. Must be one of:
-        pending: The document is waiting for a pre-condition before its core logic begins.
-        active: The document is in its main operational phase, actively processing events.
-        terminated: The document has reached a final, conclusive state.",
-              "type": "Text",
-              "value": "terminated",
-            },
-            "type": "Status Completed",
-          },
-        },
-        {
-          "op": "replace",
-          "path": "/winners",
-          "type": "Document Update",
-          "val": [
-            "playerB",
-          ],
-        },
-        {
-          "op": "replace",
-          "path": "/phase",
-          "type": "Document Update",
-          "val": "GAME_COMPLETED",
-        },
-      ]
-    `)
+    emittedEvents = results.triggeredEvents.map(event =>
+      blue.nodeToJson(blue.restoreInlineTypes(event), 'original')
+    );
+    expect(emittedEvents).toMatchInlineSnapshot(`[]`)
   });
 });

@@ -1,5 +1,3 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import nock from 'nock';
 import { ConditionalCheckFailedException } from '@aws-sdk/client-dynamodb';
@@ -15,13 +13,11 @@ import {
 } from '@myos-quiz/core';
 import { CappedAiClient, OpenAiClient, OpenAiMockClient } from '@myos-quiz/ai-openai';
 import { DynamoQuestionRepo, DynamoRateLimiter } from '@myos-quiz/persistence-ddb';
+import { loadMyosFixtureResolved } from '../fixtures/myos';
 
 const QUESTIONS_TABLE = 'MyosQuizQuestions';
 const CONTROL_TABLE = 'MyosQuizControl';
-const fixture = readFileSync(
-  join(__dirname, '..', 'fixtures', 'myos', 'document-updated-event_round-requested.json'),
-  'utf8'
-);
+const fixture = loadMyosFixtureResolved('document-updated-event_round-requested.json');
 
 const questionItems = new Map<string, Record<string, unknown>>();
 const budgetWindows = new Map<string, { count: number; limit: number; expiresAt: number }>();

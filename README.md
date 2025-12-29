@@ -48,7 +48,7 @@ flowchart LR
   subgraph Blue & MyOS
     D[Game Document<br><i>Blue</i>]
     OP[Operations<br><i>startRound, answerA/B, completeRound</i>]
-    E[Events<br><i>type: Event, kind: ...</i>]
+    E[Events<br><i>type: Conversation/Event, kind: ...</i>]
   end
 
   D -- emits --> E
@@ -75,7 +75,7 @@ Check unit test: [test/unit/blue-document.spec.ts](./test/unit/blue-document.spe
 The game uses a **single generic event type** with a discriminator:
 
 ```yaml
-type: Event
+type: Conversation/Event
 kind: <Round Started | Round Requested | Answer Submitted | Round Completed | Game Completed | Status Change>
 ```
 
@@ -103,11 +103,11 @@ kind: <Round Started | Round Requested | Answer Submitted | Round Completed | Ga
 All custom events use the **generic event** shape:
 
 ```json
-{ "type": "Event", "kind": "Round Requested", "nextRoundIndex": 1 }
-{ "type": "Event", "kind": "Round Started", "roundIndex": 0, "question": { ... } }
-{ "type": "Event", "kind": "Answer Submitted", "player": "playerA", "choice": "C" }
-{ "type": "Event", "kind": "Round Completed", "results": { ... } }
-{ "type": "Event", "kind": "Game Completed", "winners": ["playerA"], "scoreboard": { ... } }
+{ "type": "Conversation/Event", "kind": "Round Requested", "nextRoundIndex": 1 }
+{ "type": "Conversation/Event", "kind": "Round Started", "roundIndex": 0, "question": { ... } }
+{ "type": "Conversation/Event", "kind": "Answer Submitted", "player": "playerA", "choice": "C" }
+{ "type": "Conversation/Event", "kind": "Round Completed", "results": { ... } }
+{ "type": "Conversation/Event", "kind": "Game Completed", "winners": ["playerA"], "scoreboard": { ... } }
 ```
 
 ### Workflows (state machine)
@@ -117,13 +117,13 @@ All custom events use the **generic event** shape:
 ```mermaid
 stateDiagram-v2
   [*] --> PENDING
-  PENDING --> BETWEEN: validateOnInit / Status In Progress + Round Requested
+  PENDING --> BETWEEN: validateOnInit / Conversation/Status In Progress + Round Requested
   BETWEEN --> IN: onRoundStarted
   IN --> BETWEEN: onRoundCompleted
   BETWEEN --> COMPLETE: onGameCompleted
 ```
 
-* `validateOnInit` (lifecycle): validates inputs and emits `Status Change: In Progress` + `Round Requested (0)`.
+* `validateOnInit` (lifecycle): validates inputs and emits `Status Change: Conversation/Status In Progress` + `Round Requested (0)`.
 * `onRoundStarted`: sets `status=In Progress`, `phase=IN_ROUND`, writes `currentQuestion` and resets `answers`.
 * `onAnswerSubmittedA/B`: writes the player’s answer under `/answers`.
 * `onRoundCompleted`: updates `scoreboard`, `lastRoundResult`, clears `currentQuestion`, sets `phase=BETWEEN_ROUNDS`, and (if more rounds) emits `Round Requested (next)`.
@@ -138,7 +138,7 @@ stateDiagram-v2
 | `level`           | `Integer (0..2)`                                   | difficulty (0 easy, 2 hard)       |
 | `roundIndex`      | `Integer` (default `0`)                            | current index                     |
 | `phase`           | `IN_ROUND \| BETWEEN_ROUNDS \| GAME_COMPLETED`     | control guard                     |
-| `status`          | `Document Status`                                  | Pending/In Progress/Completed     |
+| `status`          | `Conversation/Document Status`                                  | Pending/In Progress/Completed     |
 | `scoreboard`      | `Dict<Text,Integer>` → `{ playerA, playerB }`      | cumulative points                 |
 | `currentQuestion` | `{ questionId, category, level, prompt, options }` | **No correct answer** stored here |
 | `answers`         | `{ playerA?: 'A'..'D', playerB?: 'A'..'D' }`       | per‑round answers                 |
