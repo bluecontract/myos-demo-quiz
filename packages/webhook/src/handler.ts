@@ -7,8 +7,8 @@ import { Logger } from '@aws-lambda-powertools/logger';
 import { Metrics, MetricUnit } from '@aws-lambda-powertools/metrics';
 import { Tracer } from '@aws-lambda-powertools/tracer';
 import { Blue } from '@blue-labs/language';
-import { blueIds, repository as coreRepository } from '@blue-repository/core-dev';
-import { repository as myosRepository } from '@blue-repository/myos-dev';
+import { repository } from '@blue-repository/types';
+import { blueIds as conversationBlueIds } from '@blue-repository/types/packages/conversation/blue-ids';
 import {
   ChoiceSchema,
   DocumentSnapshotSchema,
@@ -40,7 +40,7 @@ const logger = new Logger({ serviceName: process.env.APP_NAME ?? 'myos-quiz' });
 const metrics = new Metrics({ namespace: process.env.APP_NAME ?? 'myos-quiz' });
 const tracer = new Tracer({ serviceName: process.env.APP_NAME ?? 'myos-quiz' });
 const blue = new Blue({
-  repositories: [coreRepository, myosRepository]
+  repositories: [repository]
 });
 
 interface AppContext {
@@ -260,10 +260,9 @@ async function baseHandler(
       } catch (error) {
         const serialized = serializeError(error);
         logger.warn('Rejecting MyOS webhook due to verification error', { error: serialized });
-        const status =
-          error instanceof WebhookVerificationError ? error.statusCode : 401;
-        const reason =
-          error instanceof WebhookVerificationError ? error.reason : 'webhook_verification_failed';
+        const verificationError = error instanceof WebhookVerificationError ? error : null;
+        const status = verificationError?.statusCode ?? 401;
+        const reason = verificationError?.reason ?? 'webhook_verification_failed';
         return {
           statusCode: status,
           body: JSON.stringify({ ok: false, reason }),
@@ -426,7 +425,12 @@ function mapPayloadToSnapshot(body: string | undefined): DocumentSnapshot {
 
   const snapshotParsed = DocumentSnapshotSchema.safeParse(snapshotCandidate);
   if (!snapshotParsed.success) {
-    logger.debug('review event type', { eventBlueIdInCore: blueIds['Event'], emittedTypes: Array.isArray(snapshotCandidate.emitted) ? snapshotCandidate.emitted.map(event => event?.type) : undefined})
+    logger.debug('review event type', {
+      eventBlueIdInConversation: conversationBlueIds['Conversation/Event'],
+      emittedTypes: Array.isArray(snapshotCandidate.emitted)
+        ? snapshotCandidate.emitted.map(event => event?.type)
+        : undefined
+    });
     throw new Error(`Invalid document snapshot: ${snapshotParsed.error.toString()}`);
   }
 
@@ -786,7 +790,7 @@ function normalizeEventShape(event: Record<string, unknown>): Record<string, unk
     normalized.type = refinedType;
   }
   if (typeof normalized.type === 'string') {
-    if (normalized.type === 'Event' && refinedKind) {
+    if (normalized.type === 'Conversation/Event' && refinedKind) {
       normalized.type = refinedKind;
     }
   } else if (refinedKind) {

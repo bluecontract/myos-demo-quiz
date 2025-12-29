@@ -14,282 +14,93 @@
       "description": "Target Blue document to be bootstrapped",
       "contracts": {
         "initLifecycleChannel": {
-          "type": {
-            "name": "Lifecycle Event Channel",
-            "description": "A channel for lifecycle events in the document (e.g., processing initiation).\nYou can optionally provide an event pattern to filter which lifecycle events are handled.\n",
-            "type": {
-              "name": "Channel",
-              "description": "Generic channel",
-              "blueId": "23ZWQ6WWqFcyuoBDV9P8XaLk2oEwJtoQaPrkFFayZVqY"
-            },
-            "blueId": "8XrM27vz8BEC7vDT6Yn41fRwucLeLFXsvqLt7JCvkG4c",
-            "event": {
-              "type": {
-                "name": "Lifecycle Event",
-                "description": "A type of event that signals a significant change in a document's lifecycle.",
-                "type": {
-                  "name": "Event",
-                  "description": "Represents a generic event that can occur within the system.",
-                  "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-                },
-                "blueId": "3nViyQeU3RwjHJ7wtCoef7dwe7JPqYEvZUKEx4FohuP5"
-              }
-            }
-          },
+          "type": "Core/Lifecycle Event Channel",
           "event": {
-            "type": {
-              "name": "Lifecycle Event",
-              "description": "A type of event that signals a significant change in a document's lifecycle.",
-              "type": {
-                "name": "Event",
-                "description": "Represents a generic event that can occur within the system.",
-                "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-              },
-              "blueId": "3nViyQeU3RwjHJ7wtCoef7dwe7JPqYEvZUKEx4FohuP5"
-            }
+            "type": "Conversation/Lifecycle Event"
           }
         },
         "triggeredEventsChannel": {
-          "type": {
-            "name": "Triggered Event Channel",
-            "description": "A channel for document‑internal custom events produced during processing.\nIt is intended for locally generated events within the document, not for\nexternal timeline entries.\n",
-            "type": {
-              "name": "Channel",
-              "description": "Generic channel",
-              "blueId": "23ZWQ6WWqFcyuoBDV9P8XaLk2oEwJtoQaPrkFFayZVqY"
-            },
-            "blueId": "CXk6kCQ4S28Ee7piJ5a96fXAdgxW7VsuzG4cyJpTgsNL"
-          }
+          "type": "Core/Triggered Event Channel"
         },
         "adminChannel": {
           "description": "Game admin (X)",
-          "type": {
-            "name": "MyOS Timeline Channel",
-            "description": "MyOS-specific Timeline Channel",
-            "type": {
-              "name": "Timeline Channel",
-              "type": {
-                "name": "Channel",
-                "description": "Generic channel",
-                "blueId": "23ZWQ6WWqFcyuoBDV9P8XaLk2oEwJtoQaPrkFFayZVqY"
-              },
-              "blueId": "64NmLPmy8DBzocUccDrwmwNus3pKg7r1Xd8vewQ8cLHo",
-              "timelineId": {
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              }
-            },
-            "blueId": "E3CgW5s3sUA1U4Y2Zy7MqYFRqTPmo4UDCKVKB1nTQbhz",
-            "timelineId": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "accountId": {
-              "description": "Account identifier for the MyOS timeline",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "email": {
-              "description": "Email address associated with the MyOS timeline",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "MyOS/MyOS Timeline Channel",
           "timelineId": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "a90f6e2c-9988-4bfa-b634-b4378e398475"
           },
           "accountId": {
             "description": "Account identifier for the MyOS timeline",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "myos-quiz-demo"
           },
           "email": {
             "description": "Email address associated with the MyOS timeline",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           }
         },
         "playerAChannel": {
           "description": "Player A",
-          "type": {
-            "name": "MyOS Timeline Channel",
-            "description": "MyOS-specific Timeline Channel",
-            "type": {
-              "name": "Timeline Channel",
-              "type": {
-                "name": "Channel",
-                "description": "Generic channel",
-                "blueId": "23ZWQ6WWqFcyuoBDV9P8XaLk2oEwJtoQaPrkFFayZVqY"
-              },
-              "blueId": "64NmLPmy8DBzocUccDrwmwNus3pKg7r1Xd8vewQ8cLHo",
-              "timelineId": {
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              }
-            },
-            "blueId": "E3CgW5s3sUA1U4Y2Zy7MqYFRqTPmo4UDCKVKB1nTQbhz",
-            "timelineId": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "accountId": {
-              "description": "Account identifier for the MyOS timeline",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "email": {
-              "description": "Email address associated with the MyOS timeline",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "MyOS/MyOS Timeline Channel",
           "timelineId": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "98c52bf0-453d-432e-a06b-8825ffcb308a"
           },
           "accountId": {
             "description": "Account identifier for the MyOS timeline",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "c9d9155d-2f5d-411e-87aa-58e61ddff3f5"
           },
           "email": {
             "description": "Email address associated with the MyOS timeline",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           }
         },
         "playerBChannel": {
           "description": "Player B",
-          "type": {
-            "name": "MyOS Timeline Channel",
-            "description": "MyOS-specific Timeline Channel",
-            "type": {
-              "name": "Timeline Channel",
-              "type": {
-                "name": "Channel",
-                "description": "Generic channel",
-                "blueId": "23ZWQ6WWqFcyuoBDV9P8XaLk2oEwJtoQaPrkFFayZVqY"
-              },
-              "blueId": "64NmLPmy8DBzocUccDrwmwNus3pKg7r1Xd8vewQ8cLHo",
-              "timelineId": {
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              }
-            },
-            "blueId": "E3CgW5s3sUA1U4Y2Zy7MqYFRqTPmo4UDCKVKB1nTQbhz",
-            "timelineId": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "accountId": {
-              "description": "Account identifier for the MyOS timeline",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "email": {
-              "description": "Email address associated with the MyOS timeline",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "MyOS/MyOS Timeline Channel",
           "timelineId": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "b1a3dec4-6a5a-4f51-807e-d7635b83b939"
           },
           "accountId": {
             "description": "Account identifier for the MyOS timeline",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "84f0a5e0-a34f-4044-893a-c209f7d100d8"
           },
           "email": {
             "description": "Email address associated with the MyOS timeline",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           }
         },
         "startRound": {
           "description": "Starts a round by setting question/options (no correct answer here!)",
-          "type": {
-            "name": "Operation",
-            "description": "Named, structured interfaces that documents expose to the outside world. They define specific actions that can be performed on a document, complete with formal request definitions.",
-            "blueId": "H3KTSmqjT48Fjdoj5vY8EE98Sbp2FeNqBHGmUExRmrGk",
-            "channel": {
-              "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "request": {
-              "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked."
-            }
-          },
+          "type": "Conversation/Operation",
           "channel": {
             "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "adminChannel"
           },
           "request": {
             "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked.",
             "roundIndex": {
-              "type": {
-                "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-              }
+              "type": "Integer"
             },
             "question": {
               "questionId": {
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
+                "type": "Text"
               },
               "category": {
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
+                "type": "Text"
               },
               "level": {
-                "type": {
-                  "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-                }
+                "type": "Integer"
               },
               "prompt": {
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
+                "type": "Text"
               },
               "options": {
-                "type": {
-                  "blueId": "G7fBT9PSod1RfHLHkpafAGBDVAJMrMhAMY51ERcyXNrj"
-                },
+                "type": "Dictionary",
                 "keyType": {
                   "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
                 },
@@ -301,700 +112,248 @@
           }
         },
         "startRoundImpl": {
-          "type": {
-            "name": "Sequential Workflow Operation",
-            "description": "The most common approach for implementing operations. Links to an operation definition and defines processing steps that execute sequentially when the operation is called.",
-            "type": {
-              "name": "Sequential Workflow",
-              "description": "A sequential workflow that executes its steps in a linear order.",
-              "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-              "channel": {
-                "description": "Name of the channel this workflow listens to.\n",
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              },
-              "event": {
-                "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-              },
-              "steps": {
-                "type": {
-                  "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                },
-                "itemType": {
-                  "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                }
-              }
-            },
-            "blueId": "JAaLYym23FbqTJkan4NfmNpKxMHbXLHm71oxPqmFB2Sq",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            },
-            "operation": {
-              "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow Operation",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n"
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "GuardAndEmitRoundStarted",
-                "type": {
-                  "name": "JavaScript Code",
-                  "description": "A workflow step that executes a JavaScript code.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "Hz1LwvihraqVw1xEhSG6eeKnnFnytPNTXKMZgG8wtWtR",
-                  "code": {
-                    "type": {
-                      "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                    }
-                  }
-                },
+                "type": "Conversation/JavaScript Code",
                 "code": {
-                  "type": {
-                    "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                  },
-                  "value": "const phase = document('/phase');\nif (phase === 'IN_ROUND' || phase === 'GAME_COMPLETED') {\n  return {};\n}\n\nconst req = event.message.request || {};\nif (!req || typeof req !== 'object') return {};\n\nconst requestedIndex = Number.isInteger(req.roundIndex) ? req.roundIndex : null;\nif (requestedIndex === null) {\n  return {};\n}\n\nconst roundsTotal = document('/roundsTotal') ?? 1;\nif (requestedIndex < 0 || requestedIndex >= roundsTotal) {\n  return {};\n}\n\nconst currentIndex = document('/roundIndex') ?? 0;\nconst expectedIndex = phase === 'BETWEEN_ROUNDS' ? currentIndex + 1 : currentIndex;\nif (requestedIndex !== expectedIndex) {\n  return {};\n}\n\nconst question = req.question;\nif (!question || typeof question !== 'object') {\n  return {};\n}\n\nconst { questionId, category, level, prompt, options } = question;\nif (typeof questionId !== 'string' || !questionId.trim()) {\n  return {};\n}\nif (typeof category !== 'string' || !category.trim()) {\n  return {};\n}\nif (typeof prompt !== 'string' || !prompt.trim()) {\n  return {};\n}\n\nconst normalizedQuestionId = questionId.trim();\nconst normalizedCategory = category.trim();\nconst normalizedPrompt = prompt.trim();\n\nconst allowedCategories = document('/categories');\nif (Array.isArray(allowedCategories) && allowedCategories.length > 0) {\n  const normalizedAllowed = allowedCategories\n    .filter(cat => typeof cat === 'string')\n    .map(cat => cat.trim().toLowerCase());\n  if (!normalizedAllowed.includes(normalizedCategory.toLowerCase())) {\n    return {};\n  }\n}\n\nconst normalizedLevel = Number.isInteger(level) ? level : null;\nif (normalizedLevel === null) {\n  return {};\n}\n\nconst allowedChoices = ['A', 'B', 'C', 'D'];\nif (!options || typeof options !== 'object') {\n  return {};\n}\nconst normalizedOptions = {};\nfor (const choice of allowedChoices) {\n  const value = options[choice];\n  if (typeof value !== 'string' || !value.trim()) {\n    return {};\n  }\n  normalizedOptions[choice] = value;\n}\n\nreturn {\n  events: [\n    {\n      type: \"Event\",\n      kind: \"Round Started\",\n      roundIndex: requestedIndex,\n      question: {\n        questionId: normalizedQuestionId,\n        category: normalizedCategory,\n        level: normalizedLevel,\n        prompt: normalizedPrompt,\n        options: normalizedOptions,\n      },\n    },\n  ],\n};\n"
+                  "type": "Text",
+                  "value": "const phase = document('/phase');\nif (phase === 'IN_ROUND' || phase === 'GAME_COMPLETED') {\n  return {};\n}\n\nconst req = event.message.request || {};\nif (!req || typeof req !== 'object') return {};\n\nconst requestedIndex = Number.isInteger(req.roundIndex) ? req.roundIndex : null;\nif (requestedIndex === null) {\n  return {};\n}\n\nconst roundsTotal = document('/roundsTotal') ?? 1;\nif (requestedIndex < 0 || requestedIndex >= roundsTotal) {\n  return {};\n}\n\nconst currentIndex = document('/roundIndex') ?? 0;\nconst expectedIndex = phase === 'BETWEEN_ROUNDS' ? currentIndex + 1 : currentIndex;\nif (requestedIndex !== expectedIndex) {\n  return {};\n}\n\nconst question = req.question;\nif (!question || typeof question !== 'object') {\n  return {};\n}\n\nconst { questionId, category, level, prompt, options } = question;\nif (typeof questionId !== 'string' || !questionId.trim()) {\n  return {};\n}\nif (typeof category !== 'string' || !category.trim()) {\n  return {};\n}\nif (typeof prompt !== 'string' || !prompt.trim()) {\n  return {};\n}\n\nconst normalizedQuestionId = questionId.trim();\nconst normalizedCategory = category.trim();\nconst normalizedPrompt = prompt.trim();\n\nconst allowedCategories = document('/categories');\nif (Array.isArray(allowedCategories) && allowedCategories.length > 0) {\n  const normalizedAllowed = allowedCategories\n    .filter(cat => typeof cat === 'string')\n    .map(cat => cat.trim().toLowerCase());\n  if (!normalizedAllowed.includes(normalizedCategory.toLowerCase())) {\n    return {};\n  }\n}\n\nconst normalizedLevel = Number.isInteger(level) ? level : null;\nif (normalizedLevel === null) {\n  return {};\n}\n\nconst allowedChoices = ['A', 'B', 'C', 'D'];\nif (!options || typeof options !== 'object') {\n  return {};\n}\nconst normalizedOptions = {};\nfor (const choice of allowedChoices) {\n  const value = options[choice];\n  if (typeof value !== 'string' || !value.trim()) {\n    return {};\n  }\n  normalizedOptions[choice] = value;\n}\n\nreturn {\n  events: [\n    {\n      type: \"Conversation/Event\",\n      kind: \"Round Started\",\n      roundIndex: requestedIndex,\n      question: {\n        questionId: normalizedQuestionId,\n        category: normalizedCategory,\n        level: normalizedLevel,\n        prompt: normalizedPrompt,\n        options: normalizedOptions,\n      },\n    },\n  ],\n};\n"
                 }
               }
             ]
           },
           "operation": {
             "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "startRound"
           }
         },
         "completeRound": {
           "description": "Completes the round with the authoritative correct option",
-          "type": {
-            "name": "Operation",
-            "description": "Named, structured interfaces that documents expose to the outside world. They define specific actions that can be performed on a document, complete with formal request definitions.",
-            "blueId": "H3KTSmqjT48Fjdoj5vY8EE98Sbp2FeNqBHGmUExRmrGk",
-            "channel": {
-              "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "request": {
-              "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked."
-            }
-          },
+          "type": "Conversation/Operation",
           "channel": {
             "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "adminChannel"
           },
           "request": {
             "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked.",
             "roundIndex": {
-              "type": {
-                "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-              }
+              "type": "Integer"
             },
             "questionId": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
+              "type": "Text"
             },
             "correctOption": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
+              "type": "Text"
             },
             "explanation": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
+              "type": "Text"
             }
           }
         },
         "completeRoundImpl": {
-          "type": {
-            "name": "Sequential Workflow Operation",
-            "description": "The most common approach for implementing operations. Links to an operation definition and defines processing steps that execute sequentially when the operation is called.",
-            "type": {
-              "name": "Sequential Workflow",
-              "description": "A sequential workflow that executes its steps in a linear order.",
-              "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-              "channel": {
-                "description": "Name of the channel this workflow listens to.\n",
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              },
-              "event": {
-                "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-              },
-              "steps": {
-                "type": {
-                  "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                },
-                "itemType": {
-                  "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                }
-              }
-            },
-            "blueId": "JAaLYym23FbqTJkan4NfmNpKxMHbXLHm71oxPqmFB2Sq",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            },
-            "operation": {
-              "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow Operation",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n"
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "GuardComputeAndEmit",
-                "type": {
-                  "name": "JavaScript Code",
-                  "description": "A workflow step that executes a JavaScript code.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "Hz1LwvihraqVw1xEhSG6eeKnnFnytPNTXKMZgG8wtWtR",
-                  "code": {
-                    "type": {
-                      "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                    }
-                  }
-                },
+                "type": "Conversation/JavaScript Code",
                 "code": {
-                  "type": {
-                    "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                  },
-                  "value": "// ---- Guards ----\nconst phase = document('/phase');\nif (phase !== 'IN_ROUND') return {};  // must be in a live round\nconst curQ = document('/currentQuestion');\nif (!curQ) return {};\nconst req = event.message.request;\nconst docIdx = document('/roundIndex') ?? 0;\nif (req.roundIndex !== docIdx) return {};\nif (req.questionId !== curQ.questionId) return {};\nconst correct = (req.correctOption || '').trim().toUpperCase();\nif (!['A','B','C','D'].includes(correct)) return {};\n\n// ---- Compute results (answers may be missing; timeouts OK) ----\nconst answers = document('/answers') || {};\nconst aAns = answers.playerA ?? null;\nconst bAns = answers.playerB ?? null;\n\nconst scoreboard = document('/scoreboard') || { playerA: 0, playerB: 0 };\nconst aPoint = aAns === correct ? 1 : 0;\nconst bPoint = bAns === correct ? 1 : 0;\nconst newBoard = {\n  playerA: (scoreboard.playerA || 0) + aPoint,\n  playerB: (scoreboard.playerB || 0) + bPoint,\n};\n\nconst roundsTotal = document('/roundsTotal') || 1;\nconst nextIndex = req.roundIndex + 1;\nconst hasMore = nextIndex < roundsTotal;\n\nconst results = {\n  roundIndex: req.roundIndex,\n  questionId: req.questionId,\n  correctOption: correct,\n  explanation: req.explanation,\n  answers: { playerA: aAns, playerB: bAns },\n  pointsAwarded: { playerA: aPoint, playerB: bPoint },\n  scoreboard: newBoard\n};\n\nconst events = [{ type: \"Event\", kind: \"Round Completed\", results }];\nif (hasMore) {\n  events.push({ type: \"Event\", kind: \"Round Requested\", nextRoundIndex: nextIndex });\n} else {\n  const maxScore = Math.max(newBoard.playerA, newBoard.playerB);\n  const winners = [];\n  if (newBoard.playerA === maxScore) winners.push(\"playerA\");\n  if (newBoard.playerB === maxScore) winners.push(\"playerB\");\n  events.push({ type: \"Event\", kind: \"Game Completed\", scoreboard: newBoard, winners });\n}\nreturn { events };\n"
+                  "type": "Text",
+                  "value": "// ---- Guards ----\nconst phase = document('/phase');\nif (phase !== 'IN_ROUND') return {};  // must be in a live round\nconst curQ = document('/currentQuestion');\nif (!curQ) return {};\nconst req = event.message.request;\nconst docIdx = document('/roundIndex') ?? 0;\nif (req.roundIndex !== docIdx) return {};\nif (req.questionId !== curQ.questionId) return {};\nconst correct = (req.correctOption || '').trim().toUpperCase();\nif (!['A','B','C','D'].includes(correct)) return {};\n\n// ---- Compute results (answers may be missing; timeouts OK) ----\nconst answers = document('/answers') || {};\nconst aAns = answers.playerA ?? null;\nconst bAns = answers.playerB ?? null;\n\nconst scoreboard = document('/scoreboard') || { playerA: 0, playerB: 0 };\nconst aPoint = aAns === correct ? 1 : 0;\nconst bPoint = bAns === correct ? 1 : 0;\nconst newBoard = {\n  playerA: (scoreboard.playerA || 0) + aPoint,\n  playerB: (scoreboard.playerB || 0) + bPoint,\n};\n\nconst roundsTotal = document('/roundsTotal') || 1;\nconst nextIndex = req.roundIndex + 1;\nconst hasMore = nextIndex < roundsTotal;\n\nconst results = {\n  roundIndex: req.roundIndex,\n  questionId: req.questionId,\n  correctOption: correct,\n  explanation: req.explanation,\n  answers: { playerA: aAns, playerB: bAns },\n  pointsAwarded: { playerA: aPoint, playerB: bPoint },\n  scoreboard: newBoard\n};\n\nconst events = [{ type: \"Conversation/Event\", kind: \"Round Completed\", results }];\nif (hasMore) {\n  events.push({ type: \"Conversation/Event\", kind: \"Round Requested\", nextRoundIndex: nextIndex });\n} else {\n  const maxScore = Math.max(newBoard.playerA, newBoard.playerB);\n  const winners = [];\n  if (newBoard.playerA === maxScore) winners.push(\"playerA\");\n  if (newBoard.playerB === maxScore) winners.push(\"playerB\");\n  events.push({ type: \"Conversation/Event\", kind: \"Game Completed\", scoreboard: newBoard, winners });\n}\nreturn { events };\n"
                 }
               }
             ]
           },
           "operation": {
             "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "completeRound"
           }
         },
         "answerA": {
           "description": "Player A answers current question",
-          "type": {
-            "name": "Operation",
-            "description": "Named, structured interfaces that documents expose to the outside world. They define specific actions that can be performed on a document, complete with formal request definitions.",
-            "blueId": "H3KTSmqjT48Fjdoj5vY8EE98Sbp2FeNqBHGmUExRmrGk",
-            "channel": {
-              "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "request": {
-              "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked."
-            }
-          },
+          "type": "Conversation/Operation",
           "channel": {
             "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "playerAChannel"
           },
           "request": {
             "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           }
         },
         "answerAImpl": {
-          "type": {
-            "name": "Sequential Workflow Operation",
-            "description": "The most common approach for implementing operations. Links to an operation definition and defines processing steps that execute sequentially when the operation is called.",
-            "type": {
-              "name": "Sequential Workflow",
-              "description": "A sequential workflow that executes its steps in a linear order.",
-              "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-              "channel": {
-                "description": "Name of the channel this workflow listens to.\n",
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              },
-              "event": {
-                "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-              },
-              "steps": {
-                "type": {
-                  "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                },
-                "itemType": {
-                  "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                }
-              }
-            },
-            "blueId": "JAaLYym23FbqTJkan4NfmNpKxMHbXLHm71oxPqmFB2Sq",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            },
-            "operation": {
-              "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow Operation",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n"
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "GuardAndEmitAnswerA",
-                "type": {
-                  "name": "JavaScript Code",
-                  "description": "A workflow step that executes a JavaScript code.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "Hz1LwvihraqVw1xEhSG6eeKnnFnytPNTXKMZgG8wtWtR",
-                  "code": {
-                    "type": {
-                      "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                    }
-                  }
-                },
+                "type": "Conversation/JavaScript Code",
                 "code": {
-                  "type": {
-                    "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                  },
-                  "value": "const phase = document('/phase');\nif (phase !== 'IN_ROUND') return {};\nconst curQ = document('/currentQuestion');\nif (!curQ) return {};\nconst prev = document('/answers/playerA');\nif (prev !== undefined && prev !== null) return {};   // already answered\nconst raw = (event.message.request || '').trim().toUpperCase();\nif (!['A','B','C','D'].includes(raw)) return {};\nif (!curQ.options || !(raw in curQ.options)) return {}; // must match existing option\nreturn { events: [{ type: \"Event\", kind: \"Answer Submitted\", player: \"playerA\", choice: raw }] };\n"
+                  "type": "Text",
+                  "value": "const phase = document('/phase');\nif (phase !== 'IN_ROUND') return {};\nconst curQ = document('/currentQuestion');\nif (!curQ) return {};\nconst prev = document('/answers/playerA');\nif (prev !== undefined && prev !== null) return {};   // already answered\nconst raw = (event.message.request || '').trim().toUpperCase();\nif (!['A','B','C','D'].includes(raw)) return {};\nif (!curQ.options || !(raw in curQ.options)) return {}; // must match existing option\nreturn { events: [{ type: \"Conversation/Event\", kind: \"Answer Submitted\", player: \"playerA\", choice: raw }] };\n"
                 }
               }
             ]
           },
           "operation": {
             "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "answerA"
           }
         },
         "answerB": {
           "description": "Player B answers current question",
-          "type": {
-            "name": "Operation",
-            "description": "Named, structured interfaces that documents expose to the outside world. They define specific actions that can be performed on a document, complete with formal request definitions.",
-            "blueId": "H3KTSmqjT48Fjdoj5vY8EE98Sbp2FeNqBHGmUExRmrGk",
-            "channel": {
-              "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "request": {
-              "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked."
-            }
-          },
+          "type": "Conversation/Operation",
           "channel": {
             "description": "Specifies the channel through which Operation Request events are sent to invoke this operation on the document.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "playerBChannel"
           },
           "request": {
             "description": "Defines the expected input structure and validation rules for the operation. This represents the data that will be passed when the operation is invoked.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           }
         },
         "answerBImpl": {
-          "type": {
-            "name": "Sequential Workflow Operation",
-            "description": "The most common approach for implementing operations. Links to an operation definition and defines processing steps that execute sequentially when the operation is called.",
-            "type": {
-              "name": "Sequential Workflow",
-              "description": "A sequential workflow that executes its steps in a linear order.",
-              "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-              "channel": {
-                "description": "Name of the channel this workflow listens to.\n",
-                "type": {
-                  "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                }
-              },
-              "event": {
-                "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-              },
-              "steps": {
-                "type": {
-                  "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                },
-                "itemType": {
-                  "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                }
-              }
-            },
-            "blueId": "JAaLYym23FbqTJkan4NfmNpKxMHbXLHm71oxPqmFB2Sq",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            },
-            "operation": {
-              "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow Operation",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            }
+            "type": "Text"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n"
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "GuardAndEmitAnswerB",
-                "type": {
-                  "name": "JavaScript Code",
-                  "description": "A workflow step that executes a JavaScript code.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "Hz1LwvihraqVw1xEhSG6eeKnnFnytPNTXKMZgG8wtWtR",
-                  "code": {
-                    "type": {
-                      "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                    }
-                  }
-                },
+                "type": "Conversation/JavaScript Code",
                 "code": {
-                  "type": {
-                    "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                  },
-                  "value": "const phase = document('/phase');\nif (phase !== 'IN_ROUND') return {};\nconst curQ = document('/currentQuestion');\nif (!curQ) return {};\nconst prev = document('/answers/playerB');\nif (prev !== undefined && prev !== null) return {};   // already answered\nconst raw = (event.message.request || '').trim().toUpperCase();\nif (!['A','B','C','D'].includes(raw)) return {};\nif (!curQ.options || !(raw in curQ.options)) return {};\nreturn { events: [{ type: \"Event\", kind: \"Answer Submitted\", player: \"playerB\", choice: raw }] };\n"
+                  "type": "Text",
+                  "value": "const phase = document('/phase');\nif (phase !== 'IN_ROUND') return {};\nconst curQ = document('/currentQuestion');\nif (!curQ) return {};\nconst prev = document('/answers/playerB');\nif (prev !== undefined && prev !== null) return {};   // already answered\nconst raw = (event.message.request || '').trim().toUpperCase();\nif (!['A','B','C','D'].includes(raw)) return {};\nif (!curQ.options || !(raw in curQ.options)) return {};\nreturn { events: [{ type: \"Conversation/Event\", kind: \"Answer Submitted\", player: \"playerB\", choice: raw }] };\n"
                 }
               }
             ]
           },
           "operation": {
             "description": "References the name of the operation definition that this implementation serves. Links this workflow to a specific Operation contract.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "answerB"
           }
         },
         "validateOnInit": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "initLifecycleChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Document Processing Initiated",
-              "description": "An event that marks the beginning of document processing.",
-              "type": {
-                "name": "Lifecycle Event",
-                "description": "A type of event that signals a significant change in a document's lifecycle.",
-                "type": {
-                  "name": "Event",
-                  "description": "Represents a generic event that can occur within the system.",
-                  "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-                },
-                "blueId": "3nViyQeU3RwjHJ7wtCoef7dwe7JPqYEvZUKEx4FohuP5"
-              },
-              "blueId": "75eYxjwaABUcTCuKCeg1Pf1jjwDarLnFLXtxERehWFCv"
-            }
+            "type": "Core/Document Processing Initiated"
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "ValidateInputs",
-                "type": {
-                  "name": "JavaScript Code",
-                  "description": "A workflow step that executes a JavaScript code.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "Hz1LwvihraqVw1xEhSG6eeKnnFnytPNTXKMZgG8wtWtR",
-                  "code": {
-                    "type": {
-                      "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                    }
-                  }
-                },
+                "type": "Conversation/JavaScript Code",
                 "code": {
-                  "type": {
-                    "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                  },
-                  "value": "const issues = [];\nconst roundsTotal = document('/roundsTotal');\nconst categories = document('/categories');\nconst level = document('/level');\nif (!roundsTotal || roundsTotal < 1) issues.push(\"roundsTotal must be >= 1\");\nif (!Array.isArray(categories) || categories.length === 0) issues.push(\"categories must be a non-empty list\");\nif (typeof level !== 'number' || level < 0 || level > 2) issues.push(\"level must be 0..2\");\nif (issues.length > 0) {\n  return { events: [ { type: \"Event\", kind: \"Status Change\", status: { type: \"Status Failed\" }, issues } ] };\n}\nreturn { events: [\n  { type: \"Event\", kind: \"Status Change\", status: { type: \"Status In Progress\" } },\n  { type: \"Event\", kind: \"Round Requested\", nextRoundIndex: 0 }\n] };\n"
+                  "type": "Text",
+                  "value": "const issues = [];\nconst roundsTotal = document('/roundsTotal');\nconst categories = document('/categories');\nconst level = document('/level');\nif (!roundsTotal || roundsTotal < 1) issues.push(\"roundsTotal must be >= 1\");\nif (!Array.isArray(categories) || categories.length === 0) issues.push(\"categories must be a non-empty list\");\nif (typeof level !== 'number' || level < 0 || level > 2) issues.push(\"level must be 0..2\");\nif (issues.length > 0) {\n  return { events: [ { type: \"Conversation/Event\", kind: \"Status Change\", status: { type: \"Conversation/Status Failed\" }, issues } ] };\n}\nreturn { events: [\n  { type: \"Conversation/Event\", kind: \"Status Change\", status: { type: \"Conversation/Status In Progress\" } },\n  { type: \"Conversation/Event\", kind: \"Round Requested\", nextRoundIndex: 0 }\n] };\n"
                 }
               }
             ]
           }
         },
         "onStatusChange": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "triggeredEventsChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Event",
-              "description": "Represents a generic event that can occur within the system.",
-              "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-            },
+            "type": "Conversation/Event",
             "kind": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "Status Change"
             }
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "UpdateStatus",
-                "type": {
-                  "name": "Update Document",
-                  "description": "Updates the document with the changeset.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "54tUHQY9L5Nu1YL3d86RfGPpNH5kzbxntssaS8yGmTXm",
-                  "changeset": {
-                    "type": {
-                      "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                    },
-                    "itemType": {
-                      "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
-                    }
-                  }
-                },
+                "type": "Conversation/Update Document",
                 "changeset": {
-                  "type": {
-                    "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                  },
+                  "type": "List",
                   "itemType": {
                     "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
                   },
                   "items": [
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/status"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.status}"
                       }
                     }
@@ -1005,203 +364,103 @@
           }
         },
         "onRoundStarted": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "triggeredEventsChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Event",
-              "description": "Represents a generic event that can occur within the system.",
-              "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-            },
+            "type": "Conversation/Event",
             "kind": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "Round Started"
             }
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "ApplyRoundStart",
-                "type": {
-                  "name": "Update Document",
-                  "description": "Updates the document with the changeset.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "54tUHQY9L5Nu1YL3d86RfGPpNH5kzbxntssaS8yGmTXm",
-                  "changeset": {
-                    "type": {
-                      "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                    },
-                    "itemType": {
-                      "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
-                    }
-                  }
-                },
+                "type": "Conversation/Update Document",
                 "changeset": {
-                  "type": {
-                    "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                  },
+                  "type": "List",
                   "itemType": {
                     "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
                   },
                   "items": [
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/status"
                       },
                       "val": {
-                        "type": {
-                          "name": "Status In Progress",
-                          "description": "Represents active processing of the document, often used for processes that involve\nmultiple steps over time.",
-                          "type": {
-                            "name": "Document Status",
-                            "description": "The base type for all document status indicators.",
-                            "blueId": "CewvMvGaShax8xhe9TuJmWbkpbpDwqyMcGTMwGft4pE5",
-                            "mode": {
-                              "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-                              "type": {
-                                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                              }
-                            }
-                          },
-                          "blueId": "BQrcMigFu6ra14jVnbkLDEF192SbT7rrvEHMgtApTvYQ",
-                          "mode": {
-                            "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-                            "type": {
-                              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                            },
-                            "value": "active"
-                          }
-                        },
+                        "type": "Conversation/Status In Progress",
                         "mode": {
                           "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-                          "type": {
-                            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                          },
+                          "type": "Text",
                           "value": "active"
                         }
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/roundIndex"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.roundIndex}"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/currentQuestion"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.question}"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/answers"
                       },
                       "val": {}
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/phase"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "IN_ROUND"
                       }
                     }
@@ -1212,108 +471,50 @@
           }
         },
         "onAnswerSubmittedA": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "triggeredEventsChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Event",
-              "description": "Represents a generic event that can occur within the system.",
-              "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-            },
+            "type": "Conversation/Event",
             "kind": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "Answer Submitted"
             },
             "player": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "playerA"
             }
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "RecordA",
-                "type": {
-                  "name": "Update Document",
-                  "description": "Updates the document with the changeset.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "54tUHQY9L5Nu1YL3d86RfGPpNH5kzbxntssaS8yGmTXm",
-                  "changeset": {
-                    "type": {
-                      "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                    },
-                    "itemType": {
-                      "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
-                    }
-                  }
-                },
+                "type": "Conversation/Update Document",
                 "changeset": {
-                  "type": {
-                    "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                  },
+                  "type": "List",
                   "itemType": {
                     "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
                   },
                   "items": [
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "add"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/answers/playerA"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.choice}"
                       }
                     }
@@ -1324,108 +525,50 @@
           }
         },
         "onAnswerSubmittedB": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "triggeredEventsChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Event",
-              "description": "Represents a generic event that can occur within the system.",
-              "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-            },
+            "type": "Conversation/Event",
             "kind": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "Answer Submitted"
             },
             "player": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "playerB"
             }
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "RecordB",
-                "type": {
-                  "name": "Update Document",
-                  "description": "Updates the document with the changeset.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "54tUHQY9L5Nu1YL3d86RfGPpNH5kzbxntssaS8yGmTXm",
-                  "changeset": {
-                    "type": {
-                      "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                    },
-                    "itemType": {
-                      "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
-                    }
-                  }
-                },
+                "type": "Conversation/Update Document",
                 "changeset": {
-                  "type": {
-                    "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                  },
+                  "type": "List",
                   "itemType": {
                     "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
                   },
                   "items": [
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "add"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/answers/playerB"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.choice}"
                       }
                     }
@@ -1436,170 +579,94 @@
           }
         },
         "onRoundCompleted": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "triggeredEventsChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Event",
-              "description": "Represents a generic event that can occur within the system.",
-              "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-            },
+            "type": "Conversation/Event",
             "kind": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "Round Completed"
             }
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "ApplyResults",
-                "type": {
-                  "name": "Update Document",
-                  "description": "Updates the document with the changeset.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "54tUHQY9L5Nu1YL3d86RfGPpNH5kzbxntssaS8yGmTXm",
-                  "changeset": {
-                    "type": {
-                      "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                    },
-                    "itemType": {
-                      "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
-                    }
-                  }
-                },
+                "type": "Conversation/Update Document",
                 "changeset": {
-                  "type": {
-                    "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                  },
+                  "type": "List",
                   "itemType": {
                     "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
                   },
                   "items": [
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/scoreboard"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.results.scoreboard}"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/lastRoundResult"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.results}"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/phase"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "BETWEEN_ROUNDS"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "remove"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/currentQuestion"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/answers"
                       },
                       "val": {}
@@ -1611,168 +678,78 @@
           }
         },
         "onGameCompleted": {
-          "type": {
-            "name": "Sequential Workflow",
-            "description": "A sequential workflow that executes its steps in a linear order.",
-            "blueId": "HFRNoa2joz3hzwNNTDMP2pWo1LafW3qmwmc5yZK5b6ky",
-            "channel": {
-              "description": "Name of the channel this workflow listens to.\n",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            },
-            "event": {
-              "description": "Optional event-type criteria to filter incoming events from the channel.\n"
-            },
-            "steps": {
-              "type": {
-                "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-              },
-              "itemType": {
-                "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-              }
-            }
-          },
+          "type": "Conversation/Sequential Workflow",
           "channel": {
             "description": "Name of the channel this workflow listens to.\n",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "triggeredEventsChannel"
           },
           "event": {
             "description": "Optional event-type criteria to filter incoming events from the channel.\n",
-            "type": {
-              "name": "Event",
-              "description": "Represents a generic event that can occur within the system.",
-              "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-            },
+            "type": "Conversation/Event",
             "kind": {
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              },
+              "type": "Text",
               "value": "Game Completed"
             }
           },
           "steps": {
-            "type": {
-              "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-            },
+            "type": "List",
             "itemType": {
               "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
             },
             "items": [
               {
                 "name": "Finish",
-                "type": {
-                  "name": "Update Document",
-                  "description": "Updates the document with the changeset.",
-                  "type": {
-                    "name": "Sequential Workflow Step",
-                    "description": "Represents a single step within a workflow.",
-                    "blueId": "CvfSAWwJ4ZAMDNfum11cEcs54ECL8oszspkPKrMMY7xt"
-                  },
-                  "blueId": "54tUHQY9L5Nu1YL3d86RfGPpNH5kzbxntssaS8yGmTXm",
-                  "changeset": {
-                    "type": {
-                      "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                    },
-                    "itemType": {
-                      "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
-                    }
-                  }
-                },
+                "type": "Conversation/Update Document",
                 "changeset": {
-                  "type": {
-                    "blueId": "6aehfNAxHLC1PHHoDr3tYtFH3RWNbiWdFancJ1bypXEY"
-                  },
+                  "type": "List",
                   "itemType": {
                     "blueId": "GgvWdp9xdcmwWCMTVKgy2GCrP6Pbim5FQTrjMPH8yPoL"
                   },
                   "items": [
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/status"
                       },
                       "val": {
-                        "type": {
-                          "name": "Status Completed",
-                          "description": "A successful final state. The document has achieved its goal and its\nprocess has finished as expected.",
-                          "type": {
-                            "name": "Document Status",
-                            "description": "The base type for all document status indicators.",
-                            "blueId": "CewvMvGaShax8xhe9TuJmWbkpbpDwqyMcGTMwGft4pE5",
-                            "mode": {
-                              "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-                              "type": {
-                                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                              }
-                            }
-                          },
-                          "blueId": "6vP31gZGTfU3aqzSNNozU2vbV28pscm6kLzsN1rZ8f9y",
-                          "mode": {
-                            "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-                            "type": {
-                              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                            },
-                            "value": "terminated"
-                          }
-                        },
+                        "type": "Conversation/Status Completed",
                         "mode": {
                           "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-                          "type": {
-                            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                          },
+                          "type": "Text",
                           "value": "terminated"
                         }
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/winners"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "${event.winners}"
                       }
                     },
                     {
                       "op": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "replace"
                       },
                       "path": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "/phase"
                       },
                       "val": {
-                        "type": {
-                          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-                        },
+                        "type": "Text",
                         "value": "GAME_COMPLETED"
                       }
                     }
@@ -1783,10 +760,7 @@
           }
         },
         "checkpoint": {
-          "type": {
-            "name": "Channel Event Checkpoint",
-            "blueId": "ApWRoLiwZBWL8bptjSqNxSAL5AFjARdg4w3GymKhqZYS"
-          },
+          "type": "Core/Channel Event Checkpoint",
           "lastEvents": {
             "adminChannel": {
               "blueId": "BTo5ceaUWk6679C5Jy4JPyjq6XSMdySTKGkCET16Fauv"
@@ -1797,236 +771,147 @@
           }
         },
         "initialized": {
-          "type": {
-            "name": "Initialized Marker",
-            "blueId": "9Wgpr1kx18MaV1C6QraNbS2mYeapUhHh5SDAuNFTCHcf"
-          }
+          "type": "Core/Processing Initialized Marker"
         }
       },
       "roundsTotal": {
-        "type": {
-          "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-        },
+        "type": "Integer",
         "value": 2
       },
       "categories": {
         "items": [
           {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "History"
           },
           {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "Science"
           }
         ]
       },
       "level": {
-        "type": {
-          "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-        },
+        "type": "Integer",
         "value": 1
       },
       "roundIndex": {
-        "type": {
-          "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-        },
+        "type": "Integer",
         "value": 0
       },
       "status": {
-        "type": {
-          "name": "Status In Progress",
-          "description": "Represents active processing of the document, often used for processes that involve\nmultiple steps over time.",
-          "type": {
-            "name": "Document Status",
-            "description": "The base type for all document status indicators.",
-            "blueId": "CewvMvGaShax8xhe9TuJmWbkpbpDwqyMcGTMwGft4pE5",
-            "mode": {
-              "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-              "type": {
-                "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-              }
-            }
-          },
-          "blueId": "BQrcMigFu6ra14jVnbkLDEF192SbT7rrvEHMgtApTvYQ",
-          "mode": {
-            "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
-            "value": "active"
-          }
-        },
+        "type": "Conversation/Status In Progress",
         "mode": {
           "description": "Defines the high-level phase of the document's lifecycle. Must be one of:\n  pending: The document is waiting for a pre-condition before its core logic begins.\n  active: The document is in its main operational phase, actively processing events.\n  terminated: The document has reached a final, conclusive state.",
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "active"
         }
       },
       "currentQuestion": {
         "questionId": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "q1"
         },
         "category": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "History"
         },
         "level": {
-          "type": {
-            "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-          },
+          "type": "Integer",
           "value": 1
         },
         "prompt": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "Which civilization is credited with creating the first known form of writing?"
         },
         "options": {
           "A": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "Ancient Egypt"
           },
           "B": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "Mesopotamia"
           },
           "C": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "Indus Valley"
           },
           "D": {
-            "type": {
-              "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-            },
+            "type": "Text",
             "value": "Ancient China"
           }
         }
       },
       "answers": {
         "playerA": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "B"
         }
       },
       "phase": {
-        "type": {
-          "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-        },
+        "type": "Text",
         "value": "IN_ROUND"
       }
     },
     "emitted": [
       {
-        "type": {
-          "blueId": "3gtD3i9bgfhDat3VB53vrQpchWFn1McYe2ngSc3YLjar"
-        },
+        "type": "Conversation/Event",
         "kind": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "Answer Submitted"
         },
         "player": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "playerA"
         },
         "choice": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "B"
         }
       },
       {
-        "type": {
-          "blueId": "8mn64Vp9mxYeaNpjsPcyjni9b8VTTHMkvRe5RnUJnpCs"
-        },
+        "type": "Core/Document Update",
         "op": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "add"
         },
         "path": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "/answers/playerA"
         },
         "val": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "B"
         }
       }
     ],
     "triggeredBy": {
-      "type": {
-        "blueId": "C9JEzzG54zyHpUGyUj1g5Hk4n7sKRd4gRRiHjyPtefPP"
-      },
+      "type": "MyOS/MyOS Timeline Entry",
       "message": {
-        "type": {
-          "blueId": "5AgV9pgALC7qCNLmURMBevGCkjgmjiyMt9oyGNvugw6F"
-        },
+        "type": "Conversation/Operation Request",
         "operation": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "answerA"
         },
         "request": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "B"
         }
       },
       "timeline": {
         "timelineId": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "98c52bf0-453d-432e-a06b-8825ffcb308a"
         }
       },
       "timestamp": {
-        "type": {
-          "blueId": "5WNMiV9Knz63B4dVY5JtMyh3FB4FSGqv7ceScvuapdE1"
-        },
+        "type": "Integer",
         "value": 1761326159244498
       },
       "actor": {
-        "type": {
-          "blueId": "HQhkvaGUMTYA4ErvoPT5i3aL8SRxiimRLUpVnTc2F7aJ"
-        },
+        "type": "Conversation/Actor",
         "accountId": {
-          "type": {
-            "blueId": "DLRQwz7MQeCrzjy9bohPNwtCxKEBbKaMK65KBrwjfG6K"
-          },
+          "type": "Text",
           "value": "c9d9155d-2f5d-411e-87aa-58e61ddff3f5"
         }
       }

@@ -12,10 +12,9 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@blue-labs/document-processor": "^1.37.0",
-    "@blue-labs/language": "^1.37.0",
-    "@blue-repository/core-dev": "^0.22.0",
-    "@blue-repository/myos-dev": "^0.30.0",
+    "@blue-labs/document-processor": "2.0.0-rc.22",
+    "@blue-labs/language": "2.0.0-rc.22",
+    "@blue-repository/types": "^0.2.0",
     "@types/node": "^20.14.10",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",

@@ -1,5 +1,3 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import nock from 'nock';
 import { ConditionalCheckFailedException } from '@aws-sdk/client-dynamodb';
@@ -10,13 +8,12 @@ import { handler, __setAppContextFactory } from '@myos-quiz/webhook';
 import { Orchestrator, type MyOsClient, type TimelineRegistry } from '@myos-quiz/core';
 import { OpenAiClient } from '@myos-quiz/ai-openai';
 import { DynamoQuestionRepo } from '@myos-quiz/persistence-ddb';
+import { loadMyosFixtureResolved } from '../fixtures/myos';
 
 const TABLE_NAME = 'MyosQuizQuestions';
 const CONTROL_TABLE_NAME = 'MyosQuizControl';
 const shouldRunLiveOpenAi =
   process.env.RUN_LIVE_OPENAI_TESTS === 'true' && !!process.env.OPENAI_API_KEY;
-const loadMyosFixture = (file: string) =>
-  readFileSync(join(__dirname, '..', 'fixtures', 'myos', file), 'utf8');
 
 const tableState = new Map<string, Record<string, unknown>>();
 
@@ -186,7 +183,7 @@ describe('Webhook handler integration', () => {
         ]
       });
 
-    const roundRequestedBody = loadMyosFixture('document-updated-event_round-requested.json');
+    const roundRequestedBody = loadMyosFixtureResolved('document-updated-event_round-requested.json');
     const roundRequestedJson = JSON.parse(roundRequestedBody);
     const sessionId = roundRequestedJson.object?.sessionId as string;
 
@@ -233,7 +230,7 @@ describe('Webhook handler integration', () => {
 
     __setAppContextFactory(() => buildAppContext(fakeMyOs));
 
-    const body = loadMyosFixture('document-updated-event_answer-submitted-1a.json');
+    const body = loadMyosFixtureResolved('document-updated-event_answer-submitted-1a.json');
     const event: APIGatewayProxyEventV2 = {
       ...baseEvent,
       body
@@ -257,7 +254,7 @@ describe('Webhook handler integration', () => {
 
     __setAppContextFactory(() => buildAppContext(fakeMyOs));
 
-    const body = loadMyosFixture('document-updated-event_answer-submitted-1b.json');
+    const body = loadMyosFixtureResolved('document-updated-event_answer-submitted-1b.json');
     const eventJson = JSON.parse(body);
     const sessionId = eventJson.object?.sessionId as string;
     const roundIndex =
@@ -314,7 +311,7 @@ describe('Webhook handler integration', () => {
 
     __setAppContextFactory(() => buildAppContext(fakeMyOs));
 
-    const body = loadMyosFixture('document-updated-event_round-requested.json');
+    const body = loadMyosFixtureResolved('document-updated-event_round-requested.json');
     const event: APIGatewayProxyEventV2 = {
       ...baseEvent,
       body

@@ -1,12 +1,10 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { APIGatewayProxyEventV2, Context } from 'aws-lambda';
 import type { TimelineRegistry } from '@myos-quiz/core';
 import { handler, __setAppContextFactory } from '@myos-quiz/webhook';
+import { loadMyosFixtureResolved } from '../fixtures/myos';
 
-const fixturePath = join(__dirname, '..', 'fixtures', 'myos', 'document-updated-event_round-requested.json');
-const rawMyosPayload = readFileSync(fixturePath, 'utf8').trim();
+const rawMyosPayload = loadMyosFixtureResolved('document-updated-event_round-requested.json');
 
 const baseEvent: APIGatewayProxyEventV2 = {
   version: '2.0',
@@ -107,7 +105,7 @@ describe('webhook handler – MyOS payload', () => {
     expect(snapshot.roundIndex).toBe(0);
     expect(snapshot.categories).toEqual(['History', 'Science']);
     expect(snapshot.emitted?.length).toBeGreaterThan(0);
-    expect(snapshot.emitted?.[0]).toMatchObject({ type: 'Document Processing Initiated' });
+    expect(snapshot.emitted?.[0]).toMatchObject({ type: 'Core/Document Processing Initiated' });
     expect(snapshot.emitted?.[2]).toMatchObject({
       type: 'Round Requested',
       kind: 'Round Requested',
